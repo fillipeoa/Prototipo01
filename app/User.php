@@ -15,8 +15,9 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table = 'usuario';
     protected $fillable = [
-        'name', 'email', 'password',
+        'nome', 'email', 'senha', 'foto'
     ];
 
     /**
@@ -36,4 +37,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function colaboracao()
+    {
+        return $this->hasMany(Colaboracao::class);
+    }
 }
