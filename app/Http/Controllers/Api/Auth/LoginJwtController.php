@@ -39,10 +39,10 @@ class LoginJwtController extends Controller
 
     public function refresh()
     {
-        $token = auth('api')->refresh();
+       // $token = auth('api')->refresh();
 
         return response()->json([
-            'token'=> $token
+         //   'token'=> $token
         ]);
 
     }
