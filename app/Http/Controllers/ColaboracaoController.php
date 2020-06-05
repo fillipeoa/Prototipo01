@@ -10,6 +10,13 @@ use App\Http\Controllers\Controller;
 
 class ColaboracaoController extends Controller
 {
+    private $colaboracao;
+
+    public function __construct(Colaboracao $colaboracao)
+    {
+        $this->colaboracao = $colaboracao;
+    }
+
     public function index()
     {
         $colaboracoes = auth('api')->user()->colaboracao();

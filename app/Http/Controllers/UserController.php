@@ -101,7 +101,7 @@ class UserController extends Controller
         }
     }
     //-----------------------------------------------------------------------
-    public function dedelete($id)
+    public function delete($id)
     {
         try{
 

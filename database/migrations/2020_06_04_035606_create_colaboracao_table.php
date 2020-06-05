@@ -15,8 +15,9 @@ class CreateColaboracaoTable extends Migration
     {
         Schema::create('colaboracao', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id');
+            $table->foreignId('user_id');
 
+            $table->string('titulo');
             $table->string('descricao');
             $table->dateTime('dataRegistro');
             $table->float('latitude');
@@ -28,7 +29,7 @@ class CreateColaboracaoTable extends Migration
             $table->string('cidade');
             $table->integer('flagSituacao');
 
-            $table->foreign('usuario_id')->references('id')->on('usuario');
+            $table->foreign('user_id')->references('id')->on('usuario');
             $table->timestamps();
         });
     }
