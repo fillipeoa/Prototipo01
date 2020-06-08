@@ -6,16 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Colaboracao extends Model
 {
+    protected $table = "tbColaboracao";
+    public $timestamps = false;
 
-    protected $table = 'colaboracao';
-    protected $fillable =  [
-        'user_id', 'titulo', 'descricao', 'dataRegistro','latitude',
-        'longitude','rua', 'numero', 'bairro', 'complemento',
-        'cidade', 'flagSituacao'
+    protected $fillable = [
+        'titulo', 'descricao', 'dataRegistro', 'latitude', 'longitude',
+        'rua', 'numero', 'bairro', 'complemento', 'cidade',
+        'flagSituacao', 'idUsuario'
     ];
 
-    public function user()
+    public function usuario()
     {
-        return $this->belongsTo(User::class); //user_id
+        return $this->belongsTo(User::class, 'id');
     }
 }
