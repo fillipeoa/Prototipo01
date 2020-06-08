@@ -19,8 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-    Route::prefix('prototipo01')->group(function () {
-
         Route::post('login', 'Auth\\LoginJwtController@login')->name('login');
         // Route::post('logout', 'Auth\\LoginJwtController@logout')->name('logout');
 
@@ -41,5 +39,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
                 Route::patch('/', 'ColaboracaoController@update');
                 Route::delete('/{id}', 'ColaboracaoController@delete');
             });
-
-    });
