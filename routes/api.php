@@ -15,5 +15,39 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->usuario();
 });
+
+Route::prefix('prototipo01')->namespace('Api')->group(function(){
+
+    Route::post('/login', 'Auth\\LoginJwtController@login')->name('login');
+    Route::get('/logout', 'Auth\\LoginJwtController@logout')->name('logout');
+
+    Route::prefix('usuarios')->group(function(){
+        Route::post('/', 'UsuarioController@store')->name('store');
+    });
+
+
+    Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function(){
+
+        Route::prefix('colaboracoes')->group(function(){
+            Route::get('/', 'ColaboracaoController@index')->name('index');
+            Route::get('/{idColaboracao}', 'ColaboracaoController@show')->name('show');
+            Route::post('/', 'ColaboracaoController@store')->name('store');
+            Route::put('/{idColaboracao}', 'ColaboracaoController@update')->name('update');
+            Route::patch('/{idColaboracao}', 'ColaboracaoController@patch')->name('patch');
+            Route::delete('/{idColaboracao}', 'ColaboracaoController@delete')->name('delete');
+        });
+
+        Route::prefix('usuarios')->group(function(){
+            Route::get('/', 'UsuarioController@index')->name('index');
+            Route::get('/{idUsuario}', 'UsuarioController@show')->name('show');
+            Route::put('/{idUsuario}', 'UsuarioController@update')->name('update');
+            Route::patch('/{idUsuario}', 'UsuarioController@patch')->name('patch');
+            Route::delete('/{idUsuario}', 'UsuarioController@delete')->name('delete');
+        });
+    });
+
+});
+
+
