@@ -1,8 +1,6 @@
 <?php
 
-<<<<< HEAD
 namespace App\Api;
->>>>>>> d4e647175215b9fcf1241d3d69baf85ab8880efa
 
     class ApiMessages
     {

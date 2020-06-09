@@ -13,9 +13,9 @@ class CreateColaboracaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('colaboracao', function (Blueprint $table) {
+        Schema::create('tbColaboracao', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('idUsuario');
 
             $table->string('titulo');
             $table->string('descricao');
@@ -29,7 +29,7 @@ class CreateColaboracaoTable extends Migration
             $table->string('cidade');
             $table->integer('flagSituacao');
 
-            $table->foreign('user_id')->references('id')->on('usuario');
+            $table->foreign('idUsuario')->references('id')->on('tbUsuario');
             $table->timestamps();
         });
     }
@@ -41,6 +41,6 @@ class CreateColaboracaoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colaboracao');
+        Schema::dropIfExists('tbColaboracao');
     }
 }

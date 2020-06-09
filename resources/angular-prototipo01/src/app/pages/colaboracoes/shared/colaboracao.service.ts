@@ -8,6 +8,6 @@ import { BaseResourceService } from 'src/app/shared/services/base-resource.servi
 export class ColaboracaoService extends BaseResourceService<Colaboracao> {
 
   constructor(protected injector: Injector) {
-    super('http://localhost:8000/api/colaboracoes', injector, Colaboracao.fromJson);
+    super('http://localhost:8000/api/prototipo01/colaboracoes', injector, Colaboracao.fromJson);
   }
 }

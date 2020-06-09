@@ -1,6 +1,6 @@
 import { BaseResourceModel } from '../models/base-resource.model';
 
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
@@ -19,10 +19,16 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     }
 
     getAll(): Observable<T[]> {
-        return this.http.get(this.apiPath).pipe(
+      var configHeader =
+        {
+          headers: {
+              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTE2NjE3OTEsImV4cCI6MTU5MTY2NTM5MSwibmJmIjoxNTkxNjYxNzkxLCJqdGkiOiJmQjVKeXJIQ1NoN3RDSjVPIiwic3ViIjoxLCJwcnYiOiIwYjBjZjUwYWYxMjNkODUwNmUxNmViYTdjYjY3NjI5NzRkYTNhYzNhIn0.0QEAK8A7KljF3xDLG4UWdctiQmE4P6rJHtIvNUKp6Ig'
+          }
+         }
+        return this.http.get(this.apiPath, configHeader).pipe(
             map(this.jsonDataToResources.bind(this)),
             catchError(this.handleError)
-        )
+        );
     }
 
     getById(id: number): Observable<T> {
@@ -64,7 +70,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     protected jsonDataToResources(jsonData: any[]): T[] {
         const resources: T[] = [];
-        jsonData.forEach(element => resources.push(this.jsonDataToResourceFn(element)));
+        //jsonData.forEach(element => resources.push(this.jsonDataToResourceFn(element)));
         return (resources);
     }
 
