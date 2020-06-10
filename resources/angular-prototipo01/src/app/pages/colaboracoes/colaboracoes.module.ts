@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-
+import {SharedModule} from "../../shared/shared.module";
+import {ColaboracoesRoutingModule} from "./colaboracoes-routing.module";
+import {ColaboracaoFormComponent} from "./colaboracao-form/colaboracao-form.component";
+import {ColaboracaoListComponent} from "./colaboracao-list/colaboracao-list.component";
+import { ColaboracaoMapComponent } from './colaboracao-map/colaboracao-map.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [ColaboracaoFormComponent, ColaboracaoListComponent, ColaboracaoMapComponent],
   imports: [
-    CommonModule
+    SharedModule,
+    ColaboracoesRoutingModule
   ]
 })
 export class ColaboracoesModule { }

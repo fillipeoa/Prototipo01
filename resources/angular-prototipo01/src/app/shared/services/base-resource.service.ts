@@ -22,7 +22,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
       var configHeader =
         {
           headers: {
-              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTE2NjE3OTEsImV4cCI6MTU5MTY2NTM5MSwibmJmIjoxNTkxNjYxNzkxLCJqdGkiOiJmQjVKeXJIQ1NoN3RDSjVPIiwic3ViIjoxLCJwcnYiOiIwYjBjZjUwYWYxMjNkODUwNmUxNmViYTdjYjY3NjI5NzRkYTNhYzNhIn0.0QEAK8A7KljF3xDLG4UWdctiQmE4P6rJHtIvNUKp6Ig'
+              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTE3Mjc2MTUsImV4cCI6MTU5MTczMTIxNSwibmJmIjoxNTkxNzI3NjE1LCJqdGkiOiJLOHJ5ektmckFjVThBY3U2Iiwic3ViIjoxLCJwcnYiOiIwYjBjZjUwYWYxMjNkODUwNmUxNmViYTdjYjY3NjI5NzRkYTNhYzNhIn0.zQiH0XgUQqgxfEpXAype0ziAIJZr1Qx348VzqZipwWQ'
           }
          }
         return this.http.get(this.apiPath, configHeader).pipe(
@@ -70,7 +70,8 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     protected jsonDataToResources(jsonData: any[]): T[] {
         const resources: T[] = [];
-        //jsonData.forEach(element => resources.push(this.jsonDataToResourceFn(element)));
+        console.log(jsonData);
+        jsonData['data'].forEach(element => resources.push(this.jsonDataToResourceFn(element)));
         return (resources);
     }
 
