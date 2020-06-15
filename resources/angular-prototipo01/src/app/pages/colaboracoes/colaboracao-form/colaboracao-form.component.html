@@ -68,13 +68,13 @@
           <app-form-field-error [form-control]="resourceForm.get('cidade')"></app-form-field-error>
         </div>
         <div class="form group col-md-4">
-          <label for="situacao">Situação</label>
-          <select name="situacao" id="situacao" formControlName="situacao" class="form-control">
+          <label for="flagSituacao">Situação</label>
+          <select name="flagSituacao" id="flagSituacao" formControlName="flagSituacao" class="form-control">
             <option value="0">Pendente</option>
             <option value="1">Confirmada</option>
           </select>
 
-          <app-form-field-error [form-control]="resourceForm.get('situacao')"></app-form-field-error>
+          <app-form-field-error [form-control]="resourceForm.get('flagSituacao')"></app-form-field-error>
         </div>
       </div>
     </div>

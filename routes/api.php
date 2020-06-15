@@ -28,12 +28,18 @@ Route::prefix('prototipo01')->namespace('Api')->group(function(){
         Route::post('/', 'UsuarioController@store')->name('store');
     });
 
+    Route::prefix('buscaLocal')->group(function(){
+        Route::get('/{endereco}', 'BuscaLocal@get')->name('get');
+    });
+
+    Route::prefix('colaboracoes')->group(function(){
+        Route::get('/', 'ColaboracaoController@index')->name('index');
+        Route::get('/{idColaboracao}', 'ColaboracaoController@show')->name('show');
+    });
 
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function(){
 
         Route::prefix('colaboracoes')->group(function(){
-            Route::get('/', 'ColaboracaoController@index')->name('index');
-            Route::get('/{idColaboracao}', 'ColaboracaoController@show')->name('show');
             Route::post('/', 'ColaboracaoController@store')->name('store');
             Route::put('/{idColaboracao}', 'ColaboracaoController@update')->name('update');
             Route::patch('/{idColaboracao}', 'ColaboracaoController@patch')->name('patch');

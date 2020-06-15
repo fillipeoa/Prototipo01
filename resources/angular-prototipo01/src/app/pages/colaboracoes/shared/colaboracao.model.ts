@@ -1,9 +1,12 @@
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
+import { EnderecoService } from "../../../shared/services/endereco.service";
+
+enderecoService: EnderecoService;
 
 export class Colaboracao extends BaseResourceModel{
     constructor(
         public id?:number,
-        public usuarioId?:number,
+        public idUsuario?:number,
         public titulo?:string,
         public descricao?:string,
         public dataRegistro?:any,
@@ -22,4 +25,5 @@ export class Colaboracao extends BaseResourceModel{
     static fromJson(jsonData: any): Colaboracao{
         return Object.assign(new Colaboracao(), jsonData);
     }
+
 }

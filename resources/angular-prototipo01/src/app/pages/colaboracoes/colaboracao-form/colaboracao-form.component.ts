@@ -20,6 +20,11 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
 
   protected buildResourceForm(){
     this.resourceForm = this.formBuilder.group({
+      id: [null],
+      idUsuario: [null],
+      dataRegistro: [null],
+      latitude: [null],
+      longitude: [null],
       titulo: [null, [Validators.required, Validators.minLength(2)]],
       descricao: [null, [Validators.required, Validators.minLength(2)]],
       rua: [null, [Validators.required, Validators.minLength(2)]],
@@ -27,7 +32,7 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
       bairro: [null, [Validators.required, Validators.minLength(2)]],
       complemento: [null],
       cidade: [null, [Validators.required, Validators.minLength(2)]],
-      situacao: [null, [Validators.required]]
+      flagSituacao: [null, [Validators.required]]
     })
   }
 
@@ -39,4 +44,34 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
     const resourceName = this.resource.titulo || "";
     return "Editando Colaboração: " + resourceName;
   }
+
+  protected createResource() {
+    const resource: Colaboracao = this.jsonDataToResourceFn(this.resourceForm.value);
+    this.colaboracaoService.setCamposRestantes(resource);
+
+    setTimeout(() => {
+      alert(2);
+        this.resourceService.create(resource)
+          .subscribe(
+            resource => this.actionsForSuccess(resource),
+            error => this.actionsForError(error)
+          )
+      }
+      , 2000)
+  }
+
+  protected updateResource() {
+    const resource: Colaboracao = this.jsonDataToResourceFn(this.resourceForm.value);
+    this.colaboracaoService.setCamposRestantes(resource);
+
+    setTimeout(() => {
+        this.resourceService.update(resource)
+          .subscribe(
+            resource => this.actionsForSuccess(resource),
+            error => this.actionsForError(error)
+          )
+      }
+      , 2000)
+  }
+
 }

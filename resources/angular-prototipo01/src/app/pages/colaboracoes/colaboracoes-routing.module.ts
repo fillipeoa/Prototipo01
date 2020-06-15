@@ -6,10 +6,9 @@ import {RouterModule, Routes} from "@angular/router";
 import {ColaboracaoMapComponent} from "./colaboracao-map/colaboracao-map.component";
 
 const routes: Routes = [
-  { path: '', component: ColaboracaoMapComponent },
-  { path: 'listar', component: ColaboracaoListComponent },
-  { path: 'nova', component: ColaboracaoFormComponent },
-  { path: ':id/editar', component: ColaboracaoFormComponent }
+  { path: '', component: ColaboracaoListComponent },
+  { path: 'new', component: ColaboracaoFormComponent },
+  { path: ':id/edit', component: ColaboracaoFormComponent }
 ];
 
 @NgModule({

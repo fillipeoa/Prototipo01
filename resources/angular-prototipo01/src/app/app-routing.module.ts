@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {ColaboracaoMapComponent} from "./pages/colaboracoes/colaboracao-map/colaboracao-map.component";
 
 
 const routes: Routes = [
+  { path: '', component: ColaboracaoMapComponent },
+  { path: 'busca/:endereco', component: ColaboracaoMapComponent },
   { path: 'colaboracoes', loadChildren: () => import('./pages/colaboracoes/colaboracoes.module').then(m => m.ColaboracoesModule) },
 
-  { path: '', redirectTo:'colaboracoes', pathMatch:'full'}
+ // { path: '', redirectTo:'colaboracoes', pathMatch:'full'}
 ];
 
 @NgModule({

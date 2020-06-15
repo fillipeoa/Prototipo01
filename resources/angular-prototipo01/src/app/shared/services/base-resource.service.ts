@@ -9,6 +9,7 @@ import { Injector } from '@angular/core';
 export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     protected http: HttpClient;
+    private token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTIyNTU4OTgsImV4cCI6MTU5MjI1OTQ5OCwibmJmIjoxNTkyMjU1ODk4LCJqdGkiOiJqQm1SSjlLTGNISTRqbHZEIiwic3ViIjoxLCJwcnYiOiIwYjBjZjUwYWYxMjNkODUwNmUxNmViYTdjYjY3NjI5NzRkYTNhYzNhIn0.5eDF5OeKpn-3ZhsEi3m3dksKkmiLzx3KolNOC80cAHM';
 
     constructor(
         protected apiPath: string,
@@ -19,13 +20,13 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     }
 
     getAll(): Observable<T[]> {
-      var configHeader =
+      /*var configHeader =
         {
           headers: {
-              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTE3Mjc2MTUsImV4cCI6MTU5MTczMTIxNSwibmJmIjoxNTkxNzI3NjE1LCJqdGkiOiJLOHJ5ektmckFjVThBY3U2Iiwic3ViIjoxLCJwcnYiOiIwYjBjZjUwYWYxMjNkODUwNmUxNmViYTdjYjY3NjI5NzRkYTNhYzNhIn0.zQiH0XgUQqgxfEpXAype0ziAIJZr1Qx348VzqZipwWQ'
+              'Authorization': this.token
           }
-         }
-        return this.http.get(this.apiPath, configHeader).pipe(
+         }*/
+        return this.http.get(this.apiPath/*, configHeader*/).pipe(
             map(this.jsonDataToResources.bind(this)),
             catchError(this.handleError)
         );
@@ -41,7 +42,14 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     }
 
     create(resource: T): Observable<T> {
-        return this.http.post(this.apiPath, resource).pipe(
+      console.log(resource);
+      var configHeader =
+        {
+          headers: {
+              'Authorization': this.token
+          }
+         };
+        return this.http.post(this.apiPath, resource, configHeader).pipe(
             map(this.jsonDataToResource.bind(this)),
             catchError(this.handleError)
         )
@@ -70,7 +78,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     protected jsonDataToResources(jsonData: any[]): T[] {
         const resources: T[] = [];
-        console.log(jsonData);
         jsonData['data'].forEach(element => resources.push(this.jsonDataToResourceFn(element)));
         return (resources);
     }

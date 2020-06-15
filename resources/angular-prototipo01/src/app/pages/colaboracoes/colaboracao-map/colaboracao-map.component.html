@@ -1,3 +1,15 @@
-<div id="map">
+<div class="row" style="height: 40px">
+  <div class="col-md-6">
+    <button type="button" [routerLink]="'../../colaboracoes/new'" class="btn btn-secondary">Colaborar</button>
+  </div>
+  <div class="col-md-3">
+    <input type="text" class="form-control" value="" id="pesquisa" placeholder="Informe um local">
+  </div>
+  <div class="col-md-3">
+    <button (click)="clickPesquisar()" type="button" class="btn btn-primary brn-lg float-right mt-3">Pesquisar</button>
+  </div>
 
 </div>
+
+
+<div id="map"></div>
