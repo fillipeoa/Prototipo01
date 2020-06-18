@@ -1,0 +1,42 @@
+<app-bread-crumb
+  [items]="[{text: pageTitle}]"
+></app-bread-crumb>
+
+<app-page-header
+  [page-title]="pageTitle"
+  button-text="<< Voltar"
+  button-link="/colaboracoes"
+  button-class="btn-light"
+></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()">
+  <div class="card mb-5">
+    <div class="card-header">
+      Informações sobre o usuário
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input formControlName="nome" type="nome" class="form-control" id="nome" placeholder="Informe seu nome" required="true">
+        <app-form-field-error [form-control]="resourceForm.get('nome')"></app-form-field-error>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input formControlName="email" type="email" class="form-control" id="email" placeholder="Informe um email">
+        <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input formControlName="password" type="password" class="form-control" id="password" placeholder="Informe uma senha">
+        <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
+      </div>
+      <div class="form-group">
+        <label for="foto">Foto</label>
+        <input formControlName="foto" type="file" class="form-control-file" id="foto">
+        <app-form-field-error [form-control]="resourceForm.get('foto')"></app-form-field-error>
+      </div>
+
+      <button type="submit" class="btn btn-primary float-right">Salvar</button>
+    </div>
+  </div>
+</form>

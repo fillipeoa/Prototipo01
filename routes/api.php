@@ -47,7 +47,6 @@ Route::prefix('prototipo01')->namespace('Api')->group(function(){
         });
 
         Route::prefix('usuarios')->group(function(){
-            Route::get('/', 'UsuarioController@index')->name('index');
             Route::get('/{idUsuario}', 'UsuarioController@show')->name('show');
             Route::put('/{idUsuario}', 'UsuarioController@update')->name('update');
             Route::patch('/{idUsuario}', 'UsuarioController@patch')->name('patch');
