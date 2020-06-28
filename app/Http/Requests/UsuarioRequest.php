@@ -25,8 +25,8 @@ class UsuarioRequest extends FormRequest
     {
         return [
             'nome' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:usuario'],
-            'password' => ['string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:tbUsuario'],
+            'password' => ['string', 'min:8'/*, 'confirmed'*/],
             'foto' => ['required', 'string']
         ];
     }

@@ -22,8 +22,11 @@ export class Colaboracao extends BaseResourceModel{
         super();
     }
 
-    static fromJson(jsonData: any): Colaboracao{
-        return Object.assign(new Colaboracao(), jsonData);
+    static fromJson(jsonData: any){
+      if(jsonData.data){
+        return Object.assign(new Colaboracao(), jsonData.data);
+      }
+      return Object.assign(new Colaboracao(), jsonData);
     }
 
 }

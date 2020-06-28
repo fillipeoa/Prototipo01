@@ -16,18 +16,36 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
     this.enderecoService = enderecoService;
   }
 
-  public setCamposRestantes(colaboracao: Colaboracao): void{
-    var enderecoStr = colaboracao.rua + ',' + colaboracao.numero
-    + ', ' + colaboracao.complemento + ', ' + colaboracao.bairro + '. ' + colaboracao.cidade;
+  public getEnderecoColaboracao(colaboracao: Colaboracao): Promise<Endereco>{
+    var enderecoStr = '';
+    if(colaboracao.rua)
+      enderecoStr += colaboracao.rua + ',';
+    if(colaboracao.numero)
+      enderecoStr += colaboracao.numero + ',';
+    if(colaboracao.complemento)
+      enderecoStr += colaboracao.complemento + ',';
+    if(colaboracao.bairro)
+      enderecoStr += colaboracao.bairro + ',';
+    if(colaboracao.cidade)
+      enderecoStr += colaboracao.cidade + ',';
+
     var endereco: Endereco;
 
     this.enderecoService.getByEndereco(encodeURI(enderecoStr)).subscribe(
       value => endereco = value
-      );
+    );
+  console.log(enderecoStr);
 
-    setTimeout(()=>{
-      if(endereco){
-        alert(1);
+    return new Promise(resolve =>{
+      setTimeout(() => resolve(endereco) , 1800)
+    });
+  }
+
+  public async setCamposRestantes(colaboracao: Colaboracao): Promise<void> {
+    var endereco = await this.getEnderecoColaboracao(colaboracao);
+
+    setTimeout(() => {
+      if (endereco) {
         colaboracao.latitude = endereco.latitude;
         colaboracao.longitude = endereco.longitude;
         colaboracao.idUsuario = 1;
@@ -35,6 +53,5 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
         console.log(colaboracao.dataRegistro);
       }
     }, 1800);
-
   }
 }

@@ -46,7 +46,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     submitForm() {
         this.submittingForm = true;
 
-        if (this.currentAction == 'new') {
+      if (this.currentAction == 'new') {
             this.createResource();
         } else {
             this.updateResource();
@@ -61,14 +61,19 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
             this.currentAction = 'new';
         }
         else {
+          if (this.route.snapshot.url[1] && this.route.snapshot.url[1].path == 'edit'){
             this.currentAction = 'edit'
+          }
+          else {
+            this.currentAction = 'view'
+          }
         }
     }
 
     protected loadResource() {
-        if (this.currentAction == 'edit') {
+        if (this.currentAction == 'edit' || this.currentAction == 'view') {
             this.route.paramMap.pipe(
-                switchMap(params => this.resourceService.getById(+params.get("id")))
+                switchMap(params => this.resourceService.getById(+params.get('id')))
             )
                 .subscribe(
                     (resource) => {
@@ -85,8 +90,11 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
             this.pageTitle = this.creationPageTitle();
 
         }
-        else {
+        else if(this.currentAction == 'edit'){
             this.pageTitle = this.editionPageTitle();
+        }
+        else {
+            this.pageTitle = this.viewPageTitle();
         }
     }
 
@@ -98,10 +106,13 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
         return "Edição";
     }
 
+    protected viewPageTitle(): string{
+        return "Visualizar";
+    }
+
     protected createResource() {
         const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
 
-        alert();
         this.resourceService.create(resource)
             .subscribe(
                 resource => this.actionsForSuccess(resource),
@@ -135,11 +146,11 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
         this.submittingForm = false;
 
-        if (error.status == 422) {
+        /*if (error.status == 422) {
             this.serverErrorMessages = JSON.parse(error._body).errors;
         } else {
             this.serverErrorMessages = ['Falha na comunicação com o servidor. Por favor tente mais tarde.'];
-        }
+        }*/
     }
 
     protected abstract buildResourceForm(): void;

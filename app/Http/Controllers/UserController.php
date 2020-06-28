@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Http\Request;
 use App\Api\ApiMessages;
 use App\User;
+use function GuzzleHttp\Psr7\str;
 
 class UserController extends Controller
 {
@@ -26,6 +28,8 @@ class UserController extends Controller
 
         $data = $request->all();
 
+
+
         if(!$request->has('password') || !$request->get('password')){
             $message = new ApiMessages(
                 'É necessário informar uma senha para o usuário.'
@@ -35,8 +39,8 @@ class UserController extends Controller
         }
 
         try{
-
             $data['password'] = bcrypt($data['password']);
+
 
             $user = $this->user->create($data);
 
@@ -61,7 +65,7 @@ class UserController extends Controller
             $user = $this->user->findOrFail($id);
 
             return response()->json([
-                    'data' => $user
+                'data' => $user
             ], 200);
 
         }catch(\Exception $e){

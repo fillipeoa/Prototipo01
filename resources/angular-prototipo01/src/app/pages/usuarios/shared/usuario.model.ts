@@ -6,7 +6,7 @@ export class Usuario extends BaseResourceModel{
         public nome?:string,
         public email?:string,
         public password?:string,
-        public foto?:string
+        public foto?:any
     ){
         super();
     }

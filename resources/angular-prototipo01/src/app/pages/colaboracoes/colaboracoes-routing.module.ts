@@ -8,7 +8,8 @@ import {ColaboracaoMapComponent} from "./colaboracao-map/colaboracao-map.compone
 const routes: Routes = [
   { path: '', component: ColaboracaoListComponent },
   { path: 'new', component: ColaboracaoFormComponent },
-  { path: ':id/edit', component: ColaboracaoFormComponent }
+  { path: ':id/edit', component: ColaboracaoFormComponent },
+  { path: ':id', component: ColaboracaoFormComponent }
 ];
 
 @NgModule({

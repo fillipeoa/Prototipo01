@@ -22,14 +22,41 @@ class UsuarioController extends Controller
     {
         $data = $request->all();
 
+        str_replace('//','/',$data['foto']);
+        $partes = explode('/', $data['foto']);
+
+        if(count($partes)>0){
+            if(count($partes)>1){
+                $caminho = $partes[0];
+                for($i=1;$i<count($partes)-1;$i++){
+                    $caminho .= '/' . $partes[$i];
+                }
+            }
+            $nomeOriginal = $partes[count($partes)-1];
+            $tipo = explode('.', $nomeOriginal);
+
+            $foto = new \Illuminate\Http\UploadedFile(
+                $caminho.$nomeOriginal,
+                $nomeOriginal,
+                'image/'.$tipo[1],
+                1234,
+                TRUE
+            );
+        }
+
+
         if(!$request->has('password') || !$request->get('password')){
             $message = new ApiMessages('É necessário informar uma senha');
             return response()->json($message->getMessage(), 401);
         }
 
         try {
-
             $data['password'] = bcrypt($data['password']);
+
+
+            if($foto){
+                $data['foto'] = $foto->store('images', 'public');
+            }
 
             $this->usuario->create($data);
 
@@ -45,5 +72,6 @@ class UsuarioController extends Controller
             return response()->json($message->getMessage(), 401);
 
         }
+
     }
 }

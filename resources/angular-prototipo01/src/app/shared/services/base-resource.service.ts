@@ -9,7 +9,7 @@ import { Injector } from '@angular/core';
 export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     protected http: HttpClient;
-    private token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTIyNTU4OTgsImV4cCI6MTU5MjI1OTQ5OCwibmJmIjoxNTkyMjU1ODk4LCJqdGkiOiJqQm1SSjlLTGNISTRqbHZEIiwic3ViIjoxLCJwcnYiOiIwYjBjZjUwYWYxMjNkODUwNmUxNmViYTdjYjY3NjI5NzRkYTNhYzNhIn0.5eDF5OeKpn-3ZhsEi3m3dksKkmiLzx3KolNOC80cAHM';
+    private token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTMxODU5NjcsImV4cCI6MTU5MzE4OTU2NywibmJmIjoxNTkzMTg1OTY3LCJqdGkiOiJENGozQUZwS1oyaVpuYTBEIiwic3ViIjoyMiwicHJ2IjoiMGIwY2Y1MGFmMTIzZDg1MDZlMTZlYmE3Y2I2NzYyOTc0ZGEzYWMzYSJ9.9LklhV2dAsweLFN-oS5CSMG0k3LpTMyhUrBIPer59ug';
 
     constructor(
         protected apiPath: string,
@@ -33,17 +33,17 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     }
 
     getById(id: number): Observable<T> {
+
         const url = `${this.apiPath}/${id}`;
 
         return this.http.get(url).pipe(
             map(this.jsonDataToResource.bind(this)),
             catchError(this.handleError)
-        )
+        );
     }
 
     create(resource: T): Observable<T> {
-      console.log(resource);
-      var configHeader =
+        var configHeader =
         {
           headers: {
               'Authorization': this.token
@@ -56,18 +56,32 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     }
 
     update(resource: T): Observable<T> {
+        var configHeader =
+        {
+          headers: {
+            'Authorization': this.token
+          }
+        };
+
         const url = `${this.apiPath}/${resource.id}`;
 
-        return this.http.put(url, resource).pipe(
+        return this.http.put(url, resource, configHeader).pipe(
             map(() => resource),
             catchError(this.handleError),
         )
     }
 
     delete(id: number): Observable<any> {
+        var configHeader =
+        {
+          headers: {
+            'Authorization': this.token
+          }
+        };
+
         const url = `${this.apiPath}/${id}`;
 
-        return this.http.delete(url).pipe(
+        return this.http.delete(url, configHeader).pipe(
             map(() => null),
             catchError(this.handleError)
         )

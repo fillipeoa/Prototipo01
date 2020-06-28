@@ -22,8 +22,8 @@ export abstract class EnderecoService {
 
   getByEndereco(endereco: string): Observable<Endereco> {
     return this.http.get('http://localhost:8000/api/prototipo01/buscaLocal/' + endereco).pipe(
-      map(this.jsonDataToEndereco).bind(this),
-      catchError(this.handleError)
+      map(this.jsonDataToEndereco).bind(this)/*,
+      catchError(this.handleError)*/
     )
   }
 
@@ -32,8 +32,8 @@ export abstract class EnderecoService {
     return Endereco.fromJson(jsonData);
   }
 
-  protected handleError(error: any): Observable<any> {
-    console.log("ERRO NA REQUISIÇÃoO => ", error);
+  /*protected handleError(error: any): Observable<any> {
+    console.log("ERRO NA REQUISIÇÃO => ", error);
     return throwError(error);
-  }
+  }*/
 }

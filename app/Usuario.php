@@ -10,15 +10,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Usuario extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     *
-     */
-
     protected $table = "tbUsuario";
+
     public $timestamps = false;
 
 
