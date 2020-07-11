@@ -16,6 +16,7 @@ export class MapaComponent implements OnChanges{
 
   constructor( ) { }
 
+
   public map;
   ngOnChanges (): void {
     try{
@@ -61,15 +62,19 @@ export class MapaComponent implements OnChanges{
         }).addTo(this.map);
       }
 
-      var x = markers.length;
-
-      while(x--)
-      {
-        marker
-        L.marker(markers[x].coords).on('click', function(e) {
-          window.location = markers[e.target._leaflet_id].uri;
-        }).addTo(this.map)._leaflet_id = x;
-      }
+      x = markers.length;
+        while(x--)
+        {
+          markers[x].ref = L.marker(markers[x].coords).on('click', function(e) {
+            for(var m in markers){
+              if(markers[m].ref == e.target){
+                window.location = markers[m].uri;
+              }
+            }
+          }).addTo(this.map);
+          markers[x].id = x;
+        }
+        console.log(markers);
     }
   }
 

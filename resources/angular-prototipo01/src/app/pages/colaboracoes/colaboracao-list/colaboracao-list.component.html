@@ -3,7 +3,7 @@
 ></app-bread-crumb>
 
 <app-page-header
-  page-title="Categorias"
+  page-title="Colaborações"
   button-text="+ Nova Colaboração"
   button-link="/colaboracoes/nova"
   button-class="btn-success"
@@ -23,7 +23,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let colaboracao of resources">
+  <tr *ngFor="let colaboracao of resources ">
     <td>{{colaboracao.titulo}}</td>
     <td>{{colaboracao.dataRegistro}}</td>
     <td>{{colaboracao.rua}}</td>

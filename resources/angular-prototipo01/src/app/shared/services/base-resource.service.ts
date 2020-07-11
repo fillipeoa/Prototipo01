@@ -9,7 +9,7 @@ import { Injector } from '@angular/core';
 export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     protected http: HttpClient;
-    private token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTMxODU5NjcsImV4cCI6MTU5MzE4OTU2NywibmJmIjoxNTkzMTg1OTY3LCJqdGkiOiJENGozQUZwS1oyaVpuYTBEIiwic3ViIjoyMiwicHJ2IjoiMGIwY2Y1MGFmMTIzZDg1MDZlMTZlYmE3Y2I2NzYyOTc0ZGEzYWMzYSJ9.9LklhV2dAsweLFN-oS5CSMG0k3LpTMyhUrBIPer59ug';
+    protected token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9wcm90b3RpcG8wMVwvbG9naW4iLCJpYXQiOjE1OTQ0Nzk2MTMsImV4cCI6MTU5NDQ4MzIxMywibmJmIjoxNTk0NDc5NjEzLCJqdGkiOiJiU2ZrMGhXdkpNT2djbUhmIiwic3ViIjoyMiwicHJ2IjoiMGIwY2Y1MGFmMTIzZDg1MDZlMTZlYmE3Y2I2NzYyOTc0ZGEzYWMzYSJ9.cfF47a4d7aktnFAGqJbpVmvWJt90K8k1wvHzMlLl2kU';
 
     constructor(
         protected apiPath: string,

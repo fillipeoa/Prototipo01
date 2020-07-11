@@ -74,4 +74,18 @@ class UsuarioController extends Controller
         }
 
     }
+
+    public function colaboracoes($id)
+    {
+        try {
+            $usuario = $this->usuario->findOrFail($id);
+
+            return response()->json([
+                'data' => $usuario->colaboracoes
+            ]);
+        } catch (\Exception $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
+    }
 }

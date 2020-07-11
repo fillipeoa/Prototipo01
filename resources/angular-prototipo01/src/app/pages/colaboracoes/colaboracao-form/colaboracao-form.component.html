@@ -82,7 +82,7 @@
     </div>
 
       <div style="width: 48%; height: 300px; float: right">
-        <button (click)="this.setEndereco()" *ngIf="currentAction=='edit'" type="button" class="btn btn-dark brn-lg float-right mt-3">Buscar endereço</button>
+        <button (click)="this.setEndereco()" *ngIf="currentAction=='edit' || currentAction=='new'" type="button" class="btn btn-dark brn-lg float-right mt-3">Buscar endereço</button>
         <app-mapa [podeRecarregar]="this.podeRecarregar" [endereco]="this.endereco"></app-mapa>
         <app-server-error-messages *ngIf="enderecoNaoEncontrado" [server-error-messages]="['Endereco nao encontrado']"></app-server-error-messages>
       </div>

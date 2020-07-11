@@ -37,9 +37,9 @@ class Usuario extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function colaboracao()
+    public function colaboracoes()
     {
-        return $this->hasMany(Colaboracao::class);
+        return $this->hasMany(Colaboracao::class, 'idUsuario');
     }
 
     public function getJWTIdentifier()

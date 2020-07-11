@@ -34,7 +34,7 @@ export class ColaboracaoMapComponent implements OnInit {
 
   async ngOnInit() {
     await this.carregarColaboracoes();
-  
+
     if(this.colaboracoes){
       this.carregarCoordenadas();
     }

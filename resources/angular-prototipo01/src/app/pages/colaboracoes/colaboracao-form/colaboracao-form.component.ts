@@ -103,7 +103,7 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
   }
 
   public isReadOnly(): boolean{
-    if(this.currentAction == 'edit'){
+    if(this.currentAction == 'edit' || this.currentAction == 'new'){
       return false;
     }else{
       return true;
