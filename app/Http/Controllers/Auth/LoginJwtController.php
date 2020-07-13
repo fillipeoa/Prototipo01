@@ -9,25 +9,27 @@ use Illuminate\Support\Facades\Validator;
 
 class LoginJwtController extends Controller
 {
-    public function login(Request $request)
+    /* public function login(Request $request)
     {
-
-        $credentials = $request->all(['email', 'password']);
+        $credentials = $request->json()->all(['email', 'password']);
 
         Validator::make($credentials, [
             'email' => 'required|string',
             'password' => 'required|string',
         ])->validate();
 
-        if (!$token = auth('api')->attempt($credentials)){
-            $message = new ApiMessages('Unauthorized');
-            return response()->json(['error' => $message->getMessage()], 401);
+        try{
+            if (!$token == JWTAuth::attempt($credentials)){
+                $message = new ApiMessages('Unauthorized');
+                return response()->json(['error' => $message->getMessage()], 401);
+            }
+        }catch(){
+
         }
-
-        return response()->json([
-            'token' => $token
-        ]);
-
+            return response()->json([
+                'token' => $token
+            ]);
+        }
     }
 
     public function logout()
@@ -36,14 +38,5 @@ class LoginJwtController extends Controller
 
         return response()->json(['message' => 'Logout successfully'], 200);
     }
-
-    public function refresh()
-    {
-       // $token = auth('api')->refresh();
-
-        return response()->json([
-         //   'token'=> $token
-        ]);
-
-    }
+ */
 }

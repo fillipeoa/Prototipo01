@@ -30,15 +30,14 @@ class UserController extends Controller
             $message = new ApiMessages(
                 'É necessário informar uma senha para o usuário.'
             );
-
             return response()->json($message->getMessage(), 401);
         }
 
         try{
-
             $data['password'] = bcrypt($data['password']);
 
-            $user = $this->user->create($data);
+            $this->user->create($data);
+            $token = JWTAuth::fromUser($usuario);
 
             return response()->json([
                 'data' => [
@@ -47,10 +46,8 @@ class UserController extends Controller
             ], 200);
 
         }catch(\Exception $e){
-
             $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
-
         }
     }
 

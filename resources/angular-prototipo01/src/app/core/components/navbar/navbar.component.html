@@ -9,11 +9,17 @@
         <li class="nav-item " routerLinkActive="active">
           <a class="nav-link" routerLink="/">Início</a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
+        <li *ngIf="!auth.isLoggedIn()" class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/usuarios/new">Registre-se</a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
+        <li *ngIf="!auth.isLoggedIn()" class="nav-item" routerLinkActive="active" >
           <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li *ngIf="auth.isLoggedIn()" class="nav-item float-right" routerLinkActive="active" >
+          <a class="nav-link" routerLink="/login">{{Usuario.nome}}</a>
+        </li>
+        <li *ngIf="auth.isLoggedIn()" class="nav-item float-right" routerLinkActive="active" >
+          <a class="nav-link" routerLink="" (click)="auth.logout()">Sair</a>
         </li>
       </ul>
     </div>

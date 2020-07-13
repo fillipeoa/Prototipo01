@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'busca/:endereco', component: ColaboracaoMapComponent },
   { path: 'colaboracoes', loadChildren: () => import('./pages/colaboracoes/colaboracoes.module').then(m => m.ColaboracoesModule) },
   { path: 'usuarios', loadChildren: () => import('./pages/usuarios/usuarios.module').then(u => u.UsuariosModule) },
+  { path: 'login', loadChildren: () => import('./pages/login/login.module').then(l => l.LoginModule) }
 
  // { path: '', redirectTo:'colaboracoes', pathMatch:'full'}
 ];
