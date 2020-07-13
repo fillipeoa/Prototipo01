@@ -1,11 +1,12 @@
-import { Component, Injector } from '@angular/core';
+import {Component, Injector, ViewChild} from '@angular/core';
 import { Validators } from "@angular/forms";
 
 import { BaseResourceFormComponent } from 'src/app/shared/components/base-resource-form/base-resource-form.component';
 
 import { Colaboracao } from "../shared/colaboracao.model";
 import { ColaboracaoService } from "../shared/colaboracao.service";
-
+import {Endereco} from "../../../shared/models/endereco.model";
+import {MapaComponent} from "../../../shared/components/mapa/mapa.component";
 
 @Component({
   selector: 'app-category-form',
@@ -13,12 +14,16 @@ import { ColaboracaoService } from "../shared/colaboracao.service";
   styleUrls: ['./colaboracao-form.component.css']
 })
 export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colaboracao> {
+  public endereco: Endereco;
+  public enderecoNaoEncontrado: boolean;
+  public podeRecarregar: boolean = true;
 
   constructor(protected colaboracaoService: ColaboracaoService, protected injector: Injector) {
     super(injector, new Colaboracao(), colaboracaoService, Colaboracao.fromJson);
   }
 
   protected buildResourceForm(){
+
     this.resourceForm = this.formBuilder.group({
       id: [null],
       idUsuario: [null],
@@ -45,12 +50,16 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
     return "Editando Colaboração: " + resourceName;
   }
 
+  protected viewPageTitle(): string {
+    const resourceName = this.resource.titulo || "Colaboração";
+    return resourceName;
+  }
+
   protected createResource() {
     const resource: Colaboracao = this.jsonDataToResourceFn(this.resourceForm.value);
     this.colaboracaoService.setCamposRestantes(resource);
 
     setTimeout(() => {
-      alert(2);
         this.resourceService.create(resource)
           .subscribe(
             resource => this.actionsForSuccess(resource),
@@ -74,4 +83,31 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
       , 2000)
   }
 
+  public async setEndereco() {
+    this.podeRecarregar = false;
+
+    const resource = this.jsonDataToResourceFn(this.resourceForm.value);
+
+    this.endereco = await this.colaboracaoService.getEnderecoColaboracao(resource);
+
+    if(!this.endereco) {
+      this.enderecoNaoEncontrado = true;
+    }
+  }
+
+  protected loadResource() {
+    super.loadResource();
+    setTimeout(() => {
+      this.setEndereco();
+    } , 1000);
+  }
+
+  public isReadOnly(): boolean{
+    if(this.currentAction == 'edit' || this.currentAction == 'new'){
+      return false;
+    }else{
+      return true;
+    }
+  }
 }
+

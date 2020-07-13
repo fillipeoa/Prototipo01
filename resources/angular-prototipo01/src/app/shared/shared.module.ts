@@ -7,6 +7,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { FormFieldErrorComponent } from './components/form-field-error/form-field-error.component';
 import { ServerErrorMessagesComponent } from './components/server-error-messages/server-error-messages.component';
 import {EnderecoService} from "./services/endereco.service";
+import { MapaComponent } from './components/mapa/mapa.component';
 
 
 @NgModule({
@@ -14,24 +15,26 @@ import {EnderecoService} from "./services/endereco.service";
     BreadCrumbComponent,
     PageHeaderComponent,
     FormFieldErrorComponent,
-    ServerErrorMessagesComponent
+    ServerErrorMessagesComponent,
+    MapaComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule
   ],
-  exports: [
-    //shared modules
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
+    exports: [
+        //shared modules
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
 
-    //shared components
-    BreadCrumbComponent,
-    PageHeaderComponent,
-    FormFieldErrorComponent,
-    ServerErrorMessagesComponent
-  ]
+        //shared components
+        BreadCrumbComponent,
+        PageHeaderComponent,
+        FormFieldErrorComponent,
+        ServerErrorMessagesComponent,
+        MapaComponent
+    ]
 })
 export class SharedModule { }

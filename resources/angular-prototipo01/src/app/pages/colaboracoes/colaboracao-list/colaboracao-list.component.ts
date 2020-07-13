@@ -16,6 +16,11 @@ export class ColaboracaoListComponent extends BaseResourceListComponent<Colabora
 
   constructor(private colaboracaoService: ColaboracaoService) {
     super(colaboracaoService);
+
+    this.colaboracaoService.getByUsuario().subscribe(
+        resources => this.resources = resources.sort((a, b) => b.id - a.id),
+        error => alert('Error ao carregar a lista')
+    );
   }
 
 }

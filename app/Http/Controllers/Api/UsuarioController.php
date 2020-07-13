@@ -31,6 +31,29 @@ class UsuarioController extends Controller
     {
         $data = $request->all();
 
+        str_replace('//','/',$data['foto']);
+        $partes = explode('/', $data['foto']);
+
+        if(count($partes)>0){
+            if(count($partes)>1){
+                $caminho = $partes[0];
+                for($i=1;$i<count($partes)-1;$i++){
+                    $caminho .= '/' . $partes[$i];
+                }
+            }
+            $nomeOriginal = $partes[count($partes)-1];
+            $tipo = explode('.', $nomeOriginal);
+
+            $foto = new \Illuminate\Http\UploadedFile(
+                $caminho.$nomeOriginal,
+                $nomeOriginal,
+                'image/'.$tipo[1],
+                1234,
+                TRUE
+            );
+        }
+
+
         if(!$request->has('password') || !$request->get('password')){
             $message = new ApiMessages('É necessário informar uma senha');
             return response()->json($message->getMessage(), 401);
@@ -41,7 +64,16 @@ class UsuarioController extends Controller
             $usuario = $this->usuario->create($data);
             $token = JWTAuth::fromUser($usuario);
 
+<<<<<<< HEAD
             return response()->json(compact('usuario', 'tooken'), 201);
+=======
+
+            if($foto){
+                $data['foto'] = $foto->store('images', 'public');
+            }
+
+            $this->usuario->create($data);
+>>>>>>> 3236e85d59565b0c6ca20acf7c2a54b6f3bae11a
 
             //return response()->json([
             //    'data' => [
@@ -53,6 +85,21 @@ class UsuarioController extends Controller
             $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
 
+        }
+
+    }
+
+    public function colaboracoes($id)
+    {
+        try {
+            $usuario = $this->usuario->findOrFail($id);
+
+            return response()->json([
+                'data' => $usuario->colaboracoes
+            ]);
+        } catch (\Exception $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
     }
 

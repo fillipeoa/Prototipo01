@@ -10,15 +10,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Usuario extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     *
-     */
-
     protected $table = "tbUsuario";
+
     public $timestamps = false;
 
 
@@ -34,9 +27,9 @@ class Usuario extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function colaboracao()
+    public function colaboracoes()
     {
-        return $this->hasMany(Colaboracao::class);
+        return $this->hasMany(Colaboracao::class, 'idUsuario');
     }
 
     public function getJWTIdentifier()
