@@ -29,7 +29,11 @@ class UsuarioController extends Controller
 
     public function store(UsuarioRequest $request)
     {
+
         $data = $request->all();
+
+        // ADICIONEI ISSO AQUI PQ TAVA DANDO ERRO NO POSTMAN DE VARIAVEL INDEFINIDA
+        $caminho = '';
 
         str_replace('//','/',$data['foto']);
         $partes = explode('/', $data['foto']);
@@ -64,22 +68,17 @@ class UsuarioController extends Controller
             $usuario = $this->usuario->create($data);
             $token = JWTAuth::fromUser($usuario);
 
-<<<<<<< HEAD
-            return response()->json(compact('usuario', 'tooken'), 201);
-=======
-
             if($foto){
                 $data['foto'] = $foto->store('images', 'public');
             }
 
             $this->usuario->create($data);
->>>>>>> 3236e85d59565b0c6ca20acf7c2a54b6f3bae11a
 
-            //return response()->json([
-            //    'data' => [
-            //        'message' => 'Usuário cadastrado com sucesso!'
-            //    ]
-            //], 200);
+            return response()->json([
+                'data' => [
+                    'message' => 'Usuário cadastrado com sucesso!'
+                ]
+            ], 200);
 
         } catch (\Exception $e) {
             $message = new ApiMessages($e->getMessage());
@@ -91,6 +90,8 @@ class UsuarioController extends Controller
 
     public function colaboracoes($id)
     {
+        dd("colaboracoes");
+
         try {
             $usuario = $this->usuario->findOrFail($id);
 
@@ -105,6 +106,9 @@ class UsuarioController extends Controller
 
     public function login(Request $request)
     {
+        dd("loginControler");
+
+        $token = '';
         $credentials = $request->json()->all(['email', 'password']);
 
         Validator::make($credentials, [
@@ -130,8 +134,11 @@ class UsuarioController extends Controller
 
     public function getAuthenticatedUser()
     {
+        dd("getAuthenticadedUser");
+        $usuario = $this->usuario;
+
         try{
-            if(!$usuario == JWTAuth::parseToken()->authenticate()){
+            if(! $usuario == JWTAuth::parseToken()->authenticate()){
                 return response()->json(['user_not_found'], 404);
             }
         }catch(\Exception $e){

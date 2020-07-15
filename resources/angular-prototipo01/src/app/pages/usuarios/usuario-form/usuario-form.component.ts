@@ -39,8 +39,6 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
   protected createResource() {
     const resource: Usuario = this.jsonDataToResourceFn(this.resourceForm.value);
     setTimeout(() => {
-      console.log(this.resourceForm.value);
-
         this.resourceService.create(resource)
           .subscribe(
             resource => this.actionsForSuccess(resource),

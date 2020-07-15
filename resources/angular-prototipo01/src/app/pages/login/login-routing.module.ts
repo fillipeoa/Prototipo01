@@ -4,8 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { LoginFormComponent } from './login-form/login-form.component';
 
 const routes: Routes = [
-  { path: '', component: LoginFormComponent },
-  //{ path: ':id/edit', component: UsuarioFormComponent }
+  { path: '', component: LoginFormComponent }
 ];
 
 @NgModule({
