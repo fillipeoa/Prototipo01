@@ -5,6 +5,7 @@ import { BaseResourceFormComponent } from 'src/app/shared/components/base-resour
 
 import { Usuario } from "../shared/usuario.model";
 import { UsuarioService } from "../shared/usuario.service";
+import { TokenPayload, AuthenticationService } from 'src/app/authentication.service';
 
 @Component({
   selector: 'app-usuario-form',
@@ -13,8 +14,20 @@ import { UsuarioService } from "../shared/usuario.service";
 })
 export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
 
-  constructor(protected usuarioService: UsuarioService, protected injector: Injector) {
+  constructor(
+    protected usuarioService: UsuarioService,
+    protected injector: Injector,
+    private auth: AuthenticationService,
+    ) {
     super(injector, new Usuario(), usuarioService, Usuario.fromJson);
+  }
+
+  credentials: TokenPayload = {
+    id: 0,
+    nome: '',
+    email: '',
+    password: '',
+//foto: ''
   }
 
   protected buildResourceForm(){
@@ -37,7 +50,16 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
   }
 
   protected createResource() {
-    const resource: Usuario = this.jsonDataToResourceFn(this.resourceForm.value);
+    this.auth.stored(this.credentials).subscribe(
+      () => {
+        this.router.navigateByUrl('/')
+      },
+      err => {
+        console.error(err)
+      }
+    )
+
+    /*const resource: Usuario = this.jsonDataToResourceFn(this.resourceForm.value);
     setTimeout(() => {
         this.resourceService.create(resource)
           .subscribe(
@@ -46,6 +68,7 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
           )
       }
       , 2000)
-  }
+  }*/
 
+  }
 }

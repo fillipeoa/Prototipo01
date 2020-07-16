@@ -18,7 +18,8 @@ import { AuthGuardService } from './auth-guard.service';
     CoreModule,
     AppRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   providers: [ AuthenticationService, AuthGuardService ],
   bootstrap: [ AppComponent ]
