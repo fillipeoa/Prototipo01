@@ -8,34 +8,31 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Tymon\JWTAuth\PayloadFactory;
-use Tymon\JWTAuth\JWTAuth as JWT;
 
 class UsuarioController extends Controller
 {
 
     private $usuario;
 
+    //cria um objeto de usuario
     public function __construct(Usuario $usuario)
     {
         $this->usuario = $usuario;
     }
 
+    //cadastra um usuario
     public function store(UsuarioRequest $request)
     {
-
         $data = $request->all();
 
         // ADICIONEI ISSO AQUI PQ TAVA DANDO ERRO NO POSTMAN DE VARIAVEL INDEFINIDA
         $caminho = '';
 
-        str_replace('//','/',$data['foto']);
+        //código louco e complexo pra arrumar o problema das fotos by fifi
+        /*str_replace('//','/',$data['foto']);
         $partes = explode('/', $data['foto']);
 
         if(count($partes)>0){
@@ -55,30 +52,28 @@ class UsuarioController extends Controller
                 1234,
                 TRUE
             );
-        }
+        }*/
 
-
+        //verifica se foi informado uma senha
         if(!$request->has('password') || !$request->get('password')){
             $message = new ApiMessages('É necessário informar uma senha');
             return response()->json($message->getMessage(), 401);
         }
 
+        //encripta a senha, da um token pro usuario e cadastra ele no banco
         try {
             $data['password'] = bcrypt($data['password']);
             $usuario = $this->usuario->create($data);
+
             $token = JWTAuth::fromUser($usuario);
 
-            if($foto){
-                $data['foto'] = $foto->store('images', 'public');
-            }
+            //if($foto){
+            //    $data['foto'] = $foto->store('images', 'public');
+            //}
 
             $this->usuario->create($data);
 
-            return response()->json([
-                'data' => [
-                    'message' => 'Usuário cadastrado com sucesso!'
-                ]
-            ], 200);
+            return response()->json(compact('usuario', 'token'), 201);
 
         } catch (\Exception $e) {
             $message = new ApiMessages($e->getMessage());
@@ -88,10 +83,9 @@ class UsuarioController extends Controller
 
     }
 
+    //lista as colaboracoes de um usuario em especifico
     public function colaboracoes($id)
     {
-        dd("colaboracoes");
-
         try {
             $usuario = $this->usuario->findOrFail($id);
 
@@ -104,20 +98,13 @@ class UsuarioController extends Controller
         }
     }
 
+    //loga o usuario
     public function login(Request $request)
     {
-        dd("loginControler");
-
-        $token = '';
-        $credentials = $request->json()->all(['email', 'password']);
-
-        Validator::make($credentials, [
-            'email' => 'required|string',
-            'password' => 'required|string',
-        ])->validate();
+        $credentials = $request->all();
 
         try{
-            if (!$token == JWTAuth::attempt($credentials)){
+            if (! $token = JWTAuth::attempt($credentials)){
                 $message = new ApiMessages('Unauthorized');
                 return response()->json(['error' => $message->getMessage()], 401);
             }
@@ -134,7 +121,6 @@ class UsuarioController extends Controller
 
     public function getAuthenticatedUser()
     {
-        dd("getAuthenticadedUser");
         $usuario = $this->usuario;
 
         try{

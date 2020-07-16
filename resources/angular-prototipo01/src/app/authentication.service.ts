@@ -11,7 +11,7 @@ export interface DetalhesUsuario {
   password: string
   foto: string
   exp: number
-  iat: number
+ // iat: number
 }
 
 export interface TokenResponse{
@@ -27,6 +27,7 @@ export interface TokenPayload {
 }
 
 @Injectable()
+
 export class AuthenticationService {
   private token: string
 
@@ -66,7 +67,6 @@ export class AuthenticationService {
   }
 
   public stored(usuario: TokenPayload):Observable<any>{
-    console.log(usuario);
     return this.http.post('/api/prototipo01/usuarios/', usuario, {
       headers: {'Content-Type': 'application/json'}
     })
@@ -80,7 +80,7 @@ export class AuthenticationService {
         headers: { 'Content-Type': 'application/json' }
       }
     )
-    console.log(usuario);
+    console.log("CAUGH   IN A LIIIIIIIIIIIIIIEEEEEEEEEEEEEEEEEEEE");
 
     const request = base.pipe(
       map((data: TokenResponse) => {

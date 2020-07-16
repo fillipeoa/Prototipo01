@@ -15,7 +15,6 @@ export class UsuarioService extends BaseResourceService<Usuario> {
   }
 
   create(resource: Usuario): Observable<Usuario> {
-    console.log(resource)
     return this.http.post(this.apiPath, resource).pipe(
         map(this.jsonDataToResource.bind(this)),
         catchError(this.handleError)
