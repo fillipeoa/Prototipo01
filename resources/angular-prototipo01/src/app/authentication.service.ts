@@ -22,7 +22,8 @@ export interface TokenPayload {
   id: 0,
   nome: '',
   email: string,
-  password: string
+  password: string,
+  foto:string
 }
 
 @Injectable()
@@ -67,7 +68,8 @@ export class AuthenticationService {
   }
 
   public stored(usuario: TokenPayload):Observable<any>{
-    console.log('namus voice: stored')
+    console.log(usuario)
+
     return this.http.post('/api/prototipo01/usuarios/', usuario,
     {
       headers: {'Content-Type': 'application/json'}

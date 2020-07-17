@@ -12,7 +12,8 @@ export class LoginFormComponent {
     id: 0,
     nome: '',
     email: '',
-    password: ''
+    password: '',
+    foto:''
   }
 
   constructor(

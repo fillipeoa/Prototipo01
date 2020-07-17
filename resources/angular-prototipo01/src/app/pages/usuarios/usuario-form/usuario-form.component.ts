@@ -6,20 +6,22 @@ import { BaseResourceFormComponent } from 'src/app/shared/components/base-resour
 import { Usuario } from "../shared/usuario.model";
 import { UsuarioService } from "../shared/usuario.service";
 import { TokenPayload, AuthenticationService } from 'src/app/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario-form',
   templateUrl: './usuario-form.component.html',
   styleUrls: ['./usuario-form.component.css']
 })
-export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
+export class UsuarioFormComponent /*extends BaseResourceFormComponent<Usuario>*/ {
 
   constructor(
     protected usuarioService: UsuarioService,
+    protected router: Router,
     protected injector: Injector,
     private auth: AuthenticationService,
     ) {
-    super(injector, new Usuario(), usuarioService, Usuario.fromJson);
+    /*super(injector, new Usuario(), usuarioService, Usuario.fromJson);*/
   }
 
   credentials: TokenPayload = {
@@ -27,10 +29,11 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
     nome: '',
     email: '',
     password: '',
+    foto:''
 //foto: ''
   }
 
-  protected buildResourceForm(){
+ /* protected buildResourceForm(){
     this.resourceForm = this.formBuilder.group({
       id: [null],
       nome: [null, [Validators.required]],
@@ -38,18 +41,18 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
       password: [null, [Validators.required, Validators.minLength(8)]],
       foto: [null, [Validators.required]],
     })
-  }
+  }*/
 
-  protected creationPageTitle(): string{
+  /*protected creationPageTitle(): string{
     return "Novo Usuário"
-  }
+  }*/
 
-  protected editionPageTitle(): string {
+ /*protected editionPageTitle(): string {
     const resourceName = this.resource.nome || "";
     return "Editando Usuário: " + resourceName;
-  }
+  }*/
 
-  protected createResource() {
+  public create() {
     this.auth.stored(this.credentials).subscribe(
       () => {
         this.router.navigateByUrl('/')
