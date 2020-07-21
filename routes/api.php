@@ -21,11 +21,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('prototipo01')->namespace('Api')->group(function(){
 
-    Route::post('/login', 'UsuarioControler@login')->name('login');
+    Route::post('/login', 'UsuarioController@login');
     Route::get('/logout', 'Auth\\LoginJwtController@logout')->name('logout');
 
     Route::prefix('usuarios')->group(function(){
-        Route::post('/', 'UsuarioController@store')->name('store');
+        Route::post('', 'UsuarioController@store');
     });
 
     Route::prefix('buscaLocal')->group(function(){

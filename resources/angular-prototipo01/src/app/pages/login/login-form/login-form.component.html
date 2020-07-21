@@ -1,12 +1,28 @@
-<app-bread-crumb
-  Login
-></app-bread-crumb>
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <span>
+        Login
+      </span>
+    </li>
+  </ol>
+</nav>
 
-<app-page-header
-  button-text="<< Voltar"
-  button-link="/colaboracoes"
-  button-class="btn-light"
-></app-page-header>
+<div class="row mb-4">
+  <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+          Login
+      </h1>
+  </div>
+  <div>
+      <a [routerLink]="" class="btn btn-light">
+          << Voltar
+      </a>
+  </div>
+</div>
 
 <form (submit)="login()">
   <div class="card mb-5">
@@ -16,13 +32,13 @@
     <div class="card-body">
       <div class="form-group">
         <label for="email">Email</label>
-        <input formControlName="email" type="email" class="form-control" id="email" placeholder="Informe seu email" [(ngModel)]="credentials.email">
+        <input type="email" class="form-control" id="email" placeholder="Informe seu email" [value]='credentials.email' (input)='credentials.email=$event.target.value'>
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
-        <input formControlName="password" type="password" class="form-control" id="password" placeholder="Informe sua senha" [(ngModel)]="credentials.password">
+        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" [value]='credentials.password' (input)='credentials.password=$event.target.value'>
       </div>
-      <button type="submit" class="btn btn-primary">
+      <button type="submit" class="btn btn-primary float-right">
         Entrar
       </button>
     </div>

@@ -26,29 +26,32 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
               'Authorization': this.token
           }
          }*/
+        console.log("call me maybe all");
         return this.http.get(this.apiPath/*, configHeader*/).pipe(
             map(this.jsonDataToResources.bind(this)),
-            catchError(this.handleError)
+          //  catchError(this.handleError)
         );
     }
 
     getById(id: number): Observable<T> {
+      console.log("call me maybe id");
 
         const url = `${this.apiPath}/${id}`;
 
         return this.http.get(url).pipe(
             map(this.jsonDataToResource.bind(this)),
-            catchError(this.handleError)
+            //catchError(this.handleError)
         );
     }
 
     create(resource: T): Observable<T> {
-        var configHeader =
+      var configHeader =
         {
           headers: {
               'Authorization': this.token
           }
-         };
+        };
+        console.log("eu")
         return this.http.post(this.apiPath, resource, configHeader).pipe(
             map(this.jsonDataToResource.bind(this)),
             catchError(this.handleError)

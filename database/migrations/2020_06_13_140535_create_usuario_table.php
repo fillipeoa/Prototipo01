@@ -19,6 +19,7 @@ class CreateUsuarioTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('foto');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

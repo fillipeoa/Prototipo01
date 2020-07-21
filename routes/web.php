@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('angular');
 });
 
-Auth::routes();
+//Auth::routes();
 
 //Route::get('/home', 'controller')->name('nome');

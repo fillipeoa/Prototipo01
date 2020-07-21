@@ -1,42 +1,58 @@
-<app-bread-crumb
-  [items]="[{text: pageTitle}]"
-></app-bread-crumb>
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <span>
+        Novo usuário
+      </span>
+    </li>
+  </ol>
+</nav>
 
-<app-page-header
-  [page-title]="pageTitle"
-  button-text="<< Voltar"
-  button-link="/colaboracoes"
-  button-class="btn-light"
-></app-page-header>
+<div class="row mb-4">
+  <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+          Novo usuário
+      </h1>
+  </div>
+  <div>
+      <a [routerLink]="" class="btn btn-light">
+          << Voltar
+      </a>
+  </div>
+</div>
 
-<form [formGroup]="resourceForm" (submit)="submitForm()">
+<form ngNoForm (submit)="create()">
   <div class="card mb-5">
     <div class="card-header">
-      Informações sobre o usuário
+      Infomações sobre o usuário
     </div>
     <div class="card-body">
       <div class="form-group">
         <label for="nome">Nome</label>
-        <input formControlName="nome" type="nome" class="form-control" id="nome" placeholder="Informe seu nome" required="true">
-        <app-form-field-error [form-control]="resourceForm.get('nome')"></app-form-field-error>
+        <input type="nome" class="form-control" id="nome" placeholder="Informe seu nome" [value]='credentials.nome' (input)='credentials.nome=$event.target.value'>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input formControlName="email" type="email" class="form-control" id="email" placeholder="Informe um email">
-        <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
+        <input type="email" class="form-control" id="email" placeholder="Informe seu email" [value]='credentials.email' (input)='credentials.email=$event.target.value'>
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
-        <input formControlName="password" type="password" class="form-control" id="password" placeholder="Informe uma senha">
-        <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
+        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" [value]='credentials.password' (input)='credentials.password=$event.target.value'>
       </div>
+      <!--<div class="form-group">
+        <label for="foto">Foto</label>
+        <input type="file" class="form-control-file" id="foto">
+      </div>-->
       <div class="form-group">
         <label for="foto">Foto</label>
-        <input formControlName="foto" type="file" class="form-control-file" id="foto">
-        <app-form-field-error [form-control]="resourceForm.get('foto')"></app-form-field-error>
+        <input type="text" class="form-control" placeholder="Foto" [value]='credentials.foto' (input)='credentials.foto=$event.target.value'>
       </div>
-
-      <button type="submit" class="btn btn-primary float-right">Salvar</button>
+      <button type="submit" class="btn btn-primary float-right">
+        Salvar
+      </button>
     </div>
   </div>
 </form>

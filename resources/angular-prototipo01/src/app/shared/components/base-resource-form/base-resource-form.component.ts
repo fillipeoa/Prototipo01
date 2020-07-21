@@ -112,7 +112,6 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
     protected createResource() {
         const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
-
         this.resourceService.create(resource)
             .subscribe(
                 resource => this.actionsForSuccess(resource),
@@ -142,7 +141,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     }
 
     protected actionsForError(error) {
-        toastr.error('Ocorreu um erro ao processas a sua solicitação!');
+        toastr.error('Ocorreu um erro ao processar a sua solicitação!');
 
         this.submittingForm = false;
 
