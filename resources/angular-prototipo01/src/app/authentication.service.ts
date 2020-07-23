@@ -19,11 +19,11 @@ export interface TokenResponse{
 }
 
 export interface TokenPayload {
-  id: 0,
-  nome: '',
-  email: string,
-  password: string,
-  foto:string
+  id?: number,
+  nome?: string,
+  email?: string,
+  password?: string,
+  foto?:string
 }
 
 @Injectable()
@@ -39,24 +39,24 @@ export class AuthenticationService {
     console.log(this.token)
   }
 
-  private getToken(): string {
+  public getToken(): string {
     if(!this.token) {
       this.token = localStorage.getItem('usuarioToken');
     }
     return this.token;
   }
 
-  public getDetalhesUsuario(): DetalhesUsuario {
-    const token = this.getToken();
-    let payload
-    if(token) {
-      payload = token.split('.')[1]
-      payload = window.atob(payload)
-      return JSON.parse(payload)
-    }else{
-      return null
+    public getDetalhesUsuario(): DetalhesUsuario {
+      const token = this.getToken();
+      let payload
+      if(token) {
+        payload = token.split('.')[1]
+        payload = window.atob(payload)
+        return JSON.parse(payload)
+      }else{
+        return null
+      }
     }
-  }
 
   public isLoggedIn(): boolean {
     const usuario = this.getDetalhesUsuario()
@@ -67,24 +67,15 @@ export class AuthenticationService {
     }
   }
 
-  public stored(usuario: TokenPayload):Observable<any>{
-    console.log(usuario)
-
-    return this.http.post('/api/prototipo01/usuarios/', usuario,
-    {
-      headers: {'Content-Type': 'application/json'}
-    })
-  }
-
   public login(usuario: TokenPayload): Observable<any>{
 
     const base = this.http.post(
-      '/api/prototipo01/login',
+      'http://localhost:8000/api/prototipo01/login',
       { email: usuario.email, password: usuario.password },
       {
         headers: { 'Content-Type': 'application/json' }
       }
-    )
+    );
 
     const request = base.pipe(
       map((data: TokenResponse) => {
@@ -94,6 +85,12 @@ export class AuthenticationService {
         return data;
       })
     )
+
+    base.subscribe(data => {
+        if(data[0] && data[0].token){
+          this.saveToken(data[0].token);
+        }
+    });
 
     return request;
   }

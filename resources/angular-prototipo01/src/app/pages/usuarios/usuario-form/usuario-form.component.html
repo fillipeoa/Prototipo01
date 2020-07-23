@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<form ngNoForm (submit)="create()">
+<form [formGroup]="resourceForm" (submit)="submitForm()">
   <div class="card mb-5">
     <div class="card-header">
       Infomações sobre o usuário
@@ -32,24 +32,24 @@
     <div class="card-body">
       <div class="form-group">
         <label for="nome">Nome</label>
-        <input type="nome" class="form-control" id="nome" placeholder="Informe seu nome" [value]='credentials.nome' (input)='credentials.nome=$event.target.value'>
+        <input type="nome" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome' >
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Informe seu email" [value]='credentials.email' (input)='credentials.email=$event.target.value'>
+        <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName='email'>
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
-        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" [value]='credentials.password' (input)='credentials.password=$event.target.value'>
+        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName='password'>
+      </div>
+      <div class="form-group">
+        <label for="foto">Foto</label>
+        <input type="file" formControlName="foto" class="form-control-file" id="foto">
       </div>
       <!--<div class="form-group">
         <label for="foto">Foto</label>
-        <input type="file" class="form-control-file" id="foto">
+        <input type="text" class="form-control" placeholder="Foto" id="foto"  formControlName='foto'>
       </div>-->
-      <div class="form-group">
-        <label for="foto">Foto</label>
-        <input type="text" class="form-control" placeholder="Foto" [value]='credentials.foto' (input)='credentials.foto=$event.target.value'>
-      </div>
       <button type="submit" class="btn btn-primary float-right">
         Salvar
       </button>

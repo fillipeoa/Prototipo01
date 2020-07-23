@@ -6,6 +6,7 @@ import {EnderecoService} from "../../../shared/services/endereco.service";
 import {Endereco} from "../../../shared/models/endereco.model";
 import {Observable} from "rxjs";
 import {catchError, map} from "rxjs/operators";
+import {AuthenticationService} from "../../../authentication.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -13,8 +14,8 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
 
   enderecoService: EnderecoService;
 
-  constructor(protected injector: Injector, enderecoService: EnderecoService) {
-    super('http://localhost:8000/api/prototipo01/colaboracoes', injector, Colaboracao.fromJson);
+  constructor(protected injector: Injector, enderecoService: EnderecoService, authenticationService: AuthenticationService) {
+    super('http://localhost:8000/api/prototipo01/colaboracoes', injector, Colaboracao.fromJson, authenticationService);
     this.enderecoService = enderecoService;
   }
 
@@ -25,13 +26,14 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
             'Authorization': this.token
         }
        }
-    var idUsuario = 1;
 
-    const url = `http://localhost:8000/api/prototipo01/usuarios/${idUsuario}/colaboracoes`;
+    const url = `http://localhost:8000/api/prototipo01/usuarios/${this.usuarioLogado.sub}/colaboracoes`;
+
     return this.http.get(url, configHeader).pipe(
       map(this.jsonDataToResources.bind(this)),
       catchError(this.handleError)
     );
+
   }
 
   public getEnderecoColaboracao(colaboracao: Colaboracao): Promise<Endereco>{
@@ -50,7 +52,6 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
     var endereco: Endereco;
 
     if(enderecoStr && enderecoStr != ''){
-      console.log(enderecoStr);
       this.enderecoService.getByEndereco(encodeURI(enderecoStr)).subscribe(
         value => endereco = value
       );

@@ -28,59 +28,50 @@ class UsuarioController extends Controller
     {
         $data = $request->all();
 
-        // ADICIONEI ISSO AQUI PQ TAVA DANDO ERRO NO POSTMAN DE VARIAVEL INDEFINIDA
-        $caminho = '';
-
-        //código louco e complexo pra arrumar o problema das fotos by fifi
-        /*str_replace('//','/',$data['foto']);
-        $partes = explode('/', $data['foto']);
+        $partes = explode('\\', $data['foto']);
 
         if(count($partes)>0){
-            if(count($partes)>1){
-                $caminho = $partes[0];
-                for($i=1;$i<count($partes)-1;$i++){
-                    $caminho .= '/' . $partes[$i];
-                }
-            }
-            $nomeOriginal = $partes[count($partes)-1];
-            $tipo = explode('.', $nomeOriginal);
+            $caminho = $partes[0].'\\';
+            $nome = $partes[count($partes)-1];
+            $tipo = explode('.', $nome);
 
             $foto = new \Illuminate\Http\UploadedFile(
-                $caminho.$nomeOriginal,
-                $nomeOriginal,
+                $caminho.$nome,
+                $nome,
                 'image/'.$tipo[1],
                 1234,
                 TRUE
             );
-        }*/
+        }
 
-        //verifica se foi informado uma senha
+
         if(!$request->has('password') || !$request->get('password')){
             $message = new ApiMessages('É necessário informar uma senha');
             return response()->json($message->getMessage(), 401);
         }
 
-        //encripta a senha, da um token pro usuario e cadastra ele no banco
         try {
             $data['password'] = bcrypt($data['password']);
-            $usuario = $this->usuario->create($data);
 
-            $token = JWTAuth::fromUser($usuario);
 
-            //if($foto){
-            //    $data['foto'] = $foto->store('images', 'public');
-            //}
+            if($foto){
+                $data['foto'] = $foto->store('images', 'public');
+            }
 
             $this->usuario->create($data);
 
-            return response()->json(compact('usuario', 'token'), 201);
+
+            return response()->json([
+                'data' => [
+                    'message' => 'Usuario cadastrado com sucesso!'
+                ]
+            ], 200);
 
         } catch (\Exception $e) {
             $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
 
         }
-
     }
 
     //lista as colaboracoes de um usuario em especifico

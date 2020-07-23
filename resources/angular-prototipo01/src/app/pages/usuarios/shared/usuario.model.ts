@@ -1,6 +1,7 @@
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
+import {TokenPayload} from "../../../authentication.service";
 
-export class Usuario extends BaseResourceModel{
+export class Usuario extends BaseResourceModel implements TokenPayload{
     constructor(
         public id?:number,
         public nome?:string,

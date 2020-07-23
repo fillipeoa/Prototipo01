@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<form (submit)="login()">
+<form ngNoForm (submit)="loginAssync()" onsubmit="return false">
   <div class="card mb-5">
     <div class="card-header">
       Login
@@ -38,7 +38,7 @@
         <label for="password">Senha</label>
         <input type="password" class="form-control" id="password" placeholder="Informe sua senha" [value]='credentials.password' (input)='credentials.password=$event.target.value'>
       </div>
-      <button type="submit" class="btn btn-primary float-right">
+      <button onclick="SubmitForm(); return false;" type="submit" class="btn btn-primary float-right">
         Entrar
       </button>
     </div>

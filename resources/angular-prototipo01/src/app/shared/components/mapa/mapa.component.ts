@@ -74,7 +74,6 @@ export class MapaComponent implements OnChanges{
           }).addTo(this.map);
           markers[x].id = x;
         }
-        console.log(markers);
     }
   }
 
