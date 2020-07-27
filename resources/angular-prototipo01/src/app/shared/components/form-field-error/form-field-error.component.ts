@@ -34,11 +34,11 @@ export class FormFieldErrorComponent implements OnInit {
 
   private getErrorMessage(): string | null {
     if (this.formControl.errors.required) {
-      return "Dado obrigatório";
+      return "Por favor, preencha este campo.";
 
     } else if (this.formControl.errors.minlength) {
       const requiredLength = this.formControl.errors.minlength.requiredLength;
-      return `Deve ter no mínimo ${requiredLength} caracteres`
+      return `A senha deve ter no mínimo ${requiredLength} caracteres.`
 
     } else {
       return null

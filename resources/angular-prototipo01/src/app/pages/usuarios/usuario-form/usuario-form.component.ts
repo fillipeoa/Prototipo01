@@ -7,6 +7,8 @@ import { Usuario } from "../shared/usuario.model";
 import { UsuarioService } from "../shared/usuario.service";
 import { TokenPayload, AuthenticationService } from 'src/app/authentication.service';
 import { Router } from '@angular/router';
+import { extractErrorMessagesFromErrorResponse } from 'src/app/core/components/helper-functions/extract-error-messages-from-error-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-usuario-form',
@@ -34,9 +36,23 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
     })
   }
 
-  /*protected creationPageTitle(): string{
+
+  protected creationPageTitle(): string{
     return "Novo Usuário"
-  }*/
+  }
+
+  const resource: Usuario = this.jsonDataToResourceFn(this.resourceForm.value);
+        this.resourceService.create(suario)
+          .subscribe(
+            (response) => {
+              // do something with success response
+            },
+            (errorResponse: HttpErrorResponse) => {
+              // Extract form error messages from API  <------ HERE!!!
+              const messages = extractErrorMessagesFromErrorResponse(errorResponse);
+            },
+  }
+
 
  /*protected editionPageTitle(): string {
     const resourceName = this.resource.nome || "";

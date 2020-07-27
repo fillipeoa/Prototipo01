@@ -30,8 +30,22 @@ class UsuarioController extends Controller
 
         $partes = explode('\\', $data['foto']);
 
-        if(count($partes)>0){
+        if(count($partes)>1){
             $caminho = $partes[0].'\\';
+            $nome = $partes[count($partes)-1];
+            $tipo = explode('.', $nome);
+
+            $foto = new \Illuminate\Http\UploadedFile(
+                $caminho.$nome,
+                $nome,
+                'image/'.$tipo[1],
+                1234,
+                TRUE
+            );
+        }else if(count($partes)==1){
+            $partes = explode('/', $data['foto']);
+
+            $caminho = $partes[0].'/';
             $nome = $partes[count($partes)-1];
             $tipo = explode('.', $nome);
 

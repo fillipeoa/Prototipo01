@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->usuario();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+  //  return $request->usuario();
+//s});
 
 Route::prefix('prototipo01')->namespace('Api')->group(function(){
 

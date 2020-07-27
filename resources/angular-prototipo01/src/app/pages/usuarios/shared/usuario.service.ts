@@ -1,8 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { Usuario } from "./usuario.model";
 
+
 import { BaseResourceService } from 'src/app/shared/services/base-resource.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {AuthenticationService} from "../../../authentication.service";
 
@@ -20,6 +21,19 @@ export class UsuarioService extends BaseResourceService<Usuario> {
         map(this.jsonDataToResource.bind(this)),
         catchError(this.handleError)
     )
+}
+
+handleError(error) {
+  let errorMessage = '';
+  if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+  } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  }
+  console.log(errorMessage);
+  return throwError(errorMessage);
 }
 
 }

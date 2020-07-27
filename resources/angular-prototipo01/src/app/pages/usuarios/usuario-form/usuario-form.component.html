@@ -32,27 +32,30 @@
     <div class="card-body">
       <div class="form-group">
         <label for="nome">Nome</label>
-        <input type="nome" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome' >
+        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome'>
+        <app-form-field-error [form-control]="resourceForm.get('nome')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName='email'>
+        <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
         <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName='password'>
+        <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="foto">Foto</label>
         <input type="file" formControlName="foto" class="form-control-file" id="foto">
+        <app-form-field-error [form-control]="resourceForm.get('foto')"></app-form-field-error>
       </div>
-      <!--<div class="form-group">
-        <label for="foto">Foto</label>
-        <input type="text" class="form-control" placeholder="Foto" id="foto"  formControlName='foto'>
-      </div>-->
-      <button type="submit" class="btn btn-primary float-right">
-        Salvar
-      </button>
+
+      <button [disabled]="submittingForm || resourceForm.invalid" type="submit"
+        class="btn btn-primary float-right mt-3">Salvar</button>
+
+      <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>>
+
     </div>
   </div>
 </form>

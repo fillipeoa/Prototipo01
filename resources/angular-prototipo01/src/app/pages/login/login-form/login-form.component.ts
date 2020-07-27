@@ -20,8 +20,7 @@ export class LoginFormComponent {
   constructor(
     private auth: AuthenticationService,
     private router: Router
-  ) {
-  }
+  ) {}
 
   login() {
     this.auth.login(this.credentials).subscribe(
