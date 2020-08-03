@@ -1,8 +1,8 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Endereco} from "../../models/endereco.model";
 import "leaflet";
 import * as L from 'leaflet';
-import {DomUtil, marker, Util} from "leaflet";
+import {DomUtil, Marker, marker, Util} from "leaflet";
 
 @Component({
   selector: 'app-mapa',
@@ -13,22 +13,24 @@ export class MapaComponent implements OnChanges{
   @Input() podeRecarregar: boolean;
   @Input() endereco: Endereco;
   @Input() coords: any[];
+  @Input() formColaboracao: boolean;
+
+  @Output() getEnderecoCoords = new EventEmitter<any>();
 
   constructor( ) { }
 
-
   public map;
   ngOnChanges (): void {
-    try{
+    try {
       this.map = L.map('map');
-    }
-    catch (e) {
-      if(this.podeRecarregar){
+    } catch (e) {
+      if (this.podeRecarregar) {
         window.location.reload();
       }
     }
 
     this.atualizarMapa();
+
   }
 
   atualizarMapa(){
@@ -41,37 +43,73 @@ export class MapaComponent implements OnChanges{
       this.map.setView([0, 0], 1);
     }
 
+    //criando Icones
+    var iconeVerde = L.icon({
+      iconUrl: 'assets/icon-verde.png'
+    });
+    var iconeVermelho = L.icon({
+      iconUrl: 'assets/icon-vermelho.png'
+    });
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+
+    //se for form de colaboração, coloca marker no centro
+    if(this.formColaboracao){
+      if(this.map.markerCentral){
+        this.map.removeLayer(this.map.markerCentral);
+      }
+      this.map.markerCentral = L.marker([this.map.getBounds().getCenter().lat, this.map.getBounds().getCenter().lng]).addTo(this.map);
+      this.map.on('move', function (e) {
+        e.target.removeLayer(e.target.markerCentral);
+          e.target.markerCentral = L.marker([e.target.getBounds().getCenter().lat, e.target.getBounds().getCenter().lng]).addTo(e.target);
+      });
+    }
 
     if(this.coords && this.coords[0]){
       //criando markers
       var markers = [];
 
       for (let x in this.coords) {
-        markers.push({coords: [this.coords[x].lat, this.coords[x].lon], uri: '/colaboracoes/' + this.coords[x].id})
+        markers.push({coords: [this.coords[x].lat, this.coords[x].lon], uri: '/colaboracoes/' + this.coords[x].id, situacao: this.coords[x].situacao})
       }
 
       //adicionando link aos markers
       var x;
       for(x in markers)
       {
-        L.marker(markers[x].coords).on('click', function() {
-          window.location = markers[x].uri;
-        }).addTo(this.map);
+        if(markers[x].situacao==0){
+          L.marker(markers[x].coords, {icon: iconeVermelho}).on('click', function() {
+            window.location = markers[x].uri;
+          }).addTo(this.map);
+        }else{
+          L.marker(markers[x].coords, {icon: iconeVerde}).on('click', function() {
+            window.location = markers[x].uri;
+          }).addTo(this.map);
+        }
       }
 
       x = markers.length;
         while(x--)
         {
-          markers[x].ref = L.marker(markers[x].coords).on('click', function(e) {
-            for(var m in markers){
-              if(markers[m].ref == e.target){
-                window.location = markers[m].uri;
+          if(markers[x].situacao==0){
+            markers[x].ref = L.marker(markers[x].coords, {icon: iconeVermelho}).on('click', function(e) {
+              for(var m in markers){
+                if(markers[m].ref == e.target){
+                  window.location = markers[m].uri;
+                }
               }
-            }
-          }).addTo(this.map);
+            }).addTo(this.map);
+          }else{
+            markers[x].ref = L.marker(markers[x].coords, {icon: iconeVerde}).on('click', function(e) {
+              for(var m in markers){
+                if(markers[m].ref == e.target){
+                  window.location = markers[m].uri;
+                }
+              }
+            }).addTo(this.map);
+          }
           markers[x].id = x;
         }
     }

@@ -7,6 +7,7 @@ import { Colaboracao } from "../shared/colaboracao.model";
 import { ColaboracaoService } from "../shared/colaboracao.service";
 import {Endereco} from "../../../shared/models/endereco.model";
 import {MapaComponent} from "../../../shared/components/mapa/mapa.component";
+import {UsuarioService} from "../../usuarios/shared/usuario.service";
 
 @Component({
   selector: 'app-category-form',
@@ -14,12 +15,28 @@ import {MapaComponent} from "../../../shared/components/mapa/mapa.component";
   styleUrls: ['./colaboracao-form.component.css']
 })
 export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colaboracao> {
+  @ViewChild(MapaComponent) mapa: MapaComponent;
+
   public endereco: Endereco;
   public enderecoNaoEncontrado: boolean;
   public podeRecarregar: boolean = true;
 
-  constructor(protected colaboracaoService: ColaboracaoService, protected injector: Injector) {
+  public enderecoCoords;
+
+  public eDono: boolean = false;
+
+  constructor(protected colaboracaoService: ColaboracaoService, protected usuarioService:UsuarioService, protected injector: Injector) {
     super(injector, new Colaboracao(), colaboracaoService, Colaboracao.fromJson);
+    this.verificarDono().then(value => this.eDono = value);
+    console.log(this.eDono);
+  }
+
+  async verificarDono(): Promise<boolean>{
+    const usuarioLogado = await this.usuarioService.getUsuarioLogado();
+    if(usuarioLogado && this.resource.idUsuario == usuarioLogado.id){
+      return true;
+    }
+    return false;
   }
 
   protected buildResourceForm(){
@@ -55,10 +72,9 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
     return resourceName;
   }
 
-  protected createResource() {
+  protected async createResource() {
     const resource: Colaboracao = this.jsonDataToResourceFn(this.resourceForm.value);
-    this.colaboracaoService.setCamposRestantes(resource);
-
+    await this.colaboracaoService.setCamposRestantes(resource, this.mapa);
     setTimeout(() => {
         this.resourceService.create(resource)
           .subscribe(
@@ -69,9 +85,9 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
       , 2000)
   }
 
-  protected updateResource() {
+  protected async updateResource() {
     const resource: Colaboracao = this.jsonDataToResourceFn(this.resourceForm.value);
-    this.colaboracaoService.setCamposRestantes(resource);
+    await this.colaboracaoService.setCamposRestantes(resource, this.mapa);
 
     setTimeout(() => {
         this.resourceService.update(resource)
@@ -90,6 +106,8 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
 
     this.endereco = await this.colaboracaoService.getEnderecoColaboracao(resource);
 
+    this.enderecoCoords = null;
+
     if(!this.endereco) {
       this.enderecoNaoEncontrado = true;
     }
@@ -98,8 +116,10 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
   protected loadResource() {
     super.loadResource();
     setTimeout(() => {
-      this.setEndereco();
-    } , 1000);
+        if(this.resource.id) {
+          this.setEndereco();
+        }
+     } , 1000);
   }
 
   public isReadOnly(): boolean{

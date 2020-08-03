@@ -25,6 +25,7 @@ export class ColaboracaoMapComponent implements OnInit {
   protected route: ActivatedRoute;
   private http: HttpClient;
   public carregou: boolean;
+  public enderecoNaoEncontrado = false;
 
   constructor(private enderecoService: EnderecoService, private colaboracaoService: ColaboracaoService, protected injector: Injector,) {
     this.route = injector.get(ActivatedRoute);
@@ -41,6 +42,9 @@ export class ColaboracaoMapComponent implements OnInit {
 
     if(this.buscando()){
       await this.carregarEndereco();
+      if(!this.endereco){
+        this.enderecoNaoEncontrado = true;
+      }
     }
 
     this.carregou = true;
@@ -59,7 +63,7 @@ export class ColaboracaoMapComponent implements OnInit {
 
   carregarCoordenadas() {
     this.colaboracoes.forEach((c) => {
-        this.coords.push({lat: c.latitude, lon: c.longitude, id: c.id})
+        this.coords.push({lat: c.latitude, lon: c.longitude, id: c.id, situacao: c.flagSituacao})
       });
   }
 

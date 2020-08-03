@@ -11,7 +11,9 @@ import {AuthenticationService} from "../../../authentication.service";
 })
 export class UsuarioService extends BaseResourceService<Usuario> {
 
-  constructor(protected injector: Injector, authenticationService: AuthenticationService) {
+  public usuarioLogado: Usuario;
+
+  constructor(protected injector: Injector, private authenticationService: AuthenticationService) {
     super('http://localhost:8000/api/prototipo01/usuarios', injector, Usuario.fromJson, authenticationService);
   }
 
@@ -22,4 +24,29 @@ export class UsuarioService extends BaseResourceService<Usuario> {
     )
 }
 
+  public async getUsuarioLogado(): Promise<Usuario> {
+    const usuario = await this.buscarUsuarioLogado();
+
+    if(usuario){
+      usuario.subscribe(usuario=>{this.usuarioLogado = usuario});
+
+      return new Promise(resolve =>{
+        setTimeout(() => resolve(this.usuarioLogado) , 1500);
+      });
+    }
+    return null;
+  }
+
+  public buscarUsuarioLogado():Promise<Observable<Usuario>> {
+    const token = this.authenticationService.getDetalhesToken();
+
+    if(token){
+      const usuarioLogado = this.getById(token.sub);
+
+      return new Promise(resolve =>{
+        setTimeout(() => resolve(usuarioLogado) , 1500);
+      });
+    }
+    return null
+  }
 }

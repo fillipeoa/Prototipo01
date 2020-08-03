@@ -5,7 +5,7 @@ import { BaseResourceFormComponent } from 'src/app/shared/components/base-resour
 
 import { Usuario } from "../shared/usuario.model";
 import { UsuarioService } from "../shared/usuario.service";
-import { TokenPayload, AuthenticationService } from 'src/app/authentication.service';
+import { AuthenticationService } from 'src/app/authentication.service';
 import { Router } from '@angular/router';
 
 @Component({

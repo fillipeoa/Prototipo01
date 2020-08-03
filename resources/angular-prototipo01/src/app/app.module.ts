@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthenticationService } from './authentication.service';
-import { AuthGuardService } from './auth-guard.service';
+import { AuthGuardService } from './core/guards/auth-guard.service';
 
 @NgModule({
     declarations: [
