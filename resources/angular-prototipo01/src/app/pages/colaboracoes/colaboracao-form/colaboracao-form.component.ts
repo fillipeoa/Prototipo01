@@ -74,7 +74,9 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
 
   protected async createResource() {
     const resource: Colaboracao = this.jsonDataToResourceFn(this.resourceForm.value);
+    console.log(resource);
     await this.colaboracaoService.setCamposRestantes(resource, this.mapa);
+    console.log(resource);
     setTimeout(() => {
         this.resourceService.create(resource)
           .subscribe(
@@ -114,12 +116,13 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
   }
 
   protected loadResource() {
+    this.podeRecarregar = false;
     super.loadResource();
-    setTimeout(() => {
-        if(this.resource.id) {
-          this.setEndereco();
-        }
-     } , 1000);
+    setTimeout(()=>{
+      this.endereco = new Endereco();
+      this.endereco.latitude = this.resource.latitude;
+      this.endereco.longitude = this.resource.longitude;
+    }, 1000);
   }
 
   public isReadOnly(): boolean{

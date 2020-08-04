@@ -24,7 +24,7 @@ export class MapaComponent implements OnChanges{
     try {
       this.map = L.map('map');
     } catch (e) {
-      if (this.podeRecarregar) {
+      if(!this.coords && this.podeRecarregar) {
         window.location.reload();
       }
     }
