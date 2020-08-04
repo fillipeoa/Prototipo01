@@ -1,0 +1,97 @@
+<app-bread-crumb
+  [items]="[{text: 'Colaboração', link: '/colaboracoes'}, {text: pageTitle}]"
+></app-bread-crumb>
+
+<app-page-header
+  [page-title]="pageTitle"
+  button-text="<< Voltar"
+  button-link="/colaboracoes"
+  button-class="btn-light"
+></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()">
+  <div class="card">
+    <div class="card-header">
+      Informações sobre a colaboração
+    </div>
+    <div class="card-body">
+      <div style="width: 50%; float: left">
+      <div class="form row">
+        <div class="form group col-md-12">
+          <label for="titulo">Título</label>
+          <input [readOnly]="isReadOnly()" type="text" id="titulo" class="form-control" formControlName="titulo">
+
+          <app-form-field-error [form-control]="resourceForm.get('titulo')"></app-form-field-error>
+        </div>
+      </div>
+
+      <div class="form row">
+        <div class="form group col-md-12">
+          <label for="descricao">Descrição</label>
+          <input [readOnly]="isReadOnly()" type="text" id="descricao" class="form-control" formControlName="descricao">
+
+          <app-form-field-error [form-control]="resourceForm.get('titulo')"></app-form-field-error>
+        </div>
+      </div>
+
+      <div class="form row">
+        <div class="form group col-md-4">
+          <label for="rua">Rua</label>
+          <input [readOnly]="isReadOnly()" type="text" id="rua" class="form-control" formControlName="rua">
+
+          <app-form-field-error [form-control]="resourceForm.get('rua')"></app-form-field-error>
+        </div>
+        <div class="form group col-md-4">
+          <label for="numero">Número</label>
+          <input [readOnly]="isReadOnly()" type="text" id="numero" class="form-control" formControlName="numero">
+
+          <app-form-field-error [form-control]="resourceForm.get('numero')"></app-form-field-error>
+        </div>
+        <div class="form group col-md-4">
+          <label for="bairro">Bairro</label>
+          <input [readOnly]="isReadOnly()" type="text" id="bairro" class="form-control" formControlName="bairro">
+
+          <app-form-field-error [form-control]="resourceForm.get('bairro')"></app-form-field-error>
+        </div>
+      </div>
+
+      <div class="form row">
+        <div class="form group col-md-4">
+          <label for="complemento">Complemento</label>
+          <input [readOnly]="isReadOnly()" type="text" id="complemento" class="form-control" formControlName="complemento">
+
+          <app-form-field-error [form-control]="resourceForm.get('complemento')"></app-form-field-error>
+        </div>
+        <div class="form group col-md-4">
+          <label for="cidade">Cidade</label>
+          <input [readOnly]="isReadOnly()" type="text" id="cidade" class="form-control" formControlName="cidade">
+
+          <app-form-field-error [form-control]="resourceForm.get('cidade')"></app-form-field-error>
+        </div>
+        <div class="form group col-md-4">
+          <label for="flagSituacao">Situação</label>
+          <select [ngClass]="{'selectReadOnly': isReadOnly()}" name="flagSituacao" id="flagSituacao" formControlName="flagSituacao" class="form-control">
+            <option value="0">Pendente</option>
+            <option value="1">Confirmada</option>
+          </select>
+
+
+          <app-form-field-error [form-control]="resourceForm.get('flagSituacao')"></app-form-field-error>
+        </div>
+      </div>
+    </div>
+
+      <div style="width: 48%; height: 300px; float: right">
+        <button (click)="this.setEndereco()" *ngIf="currentAction=='edit' || currentAction=='new'" type="button" class="btn btn-dark brn-lg float-right mt-3">Buscar endereço</button>
+        <app-mapa [podeRecarregar]="this.podeRecarregar" [endereco]="this.endereco"></app-mapa>
+        <app-server-error-messages *ngIf="enderecoNaoEncontrado" [server-error-messages]="['Endereco nao encontrado']"></app-server-error-messages>
+      </div>
+    </div>
+  </div>
+
+  <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+
+  <button *ngIf="currentAction!='view'" [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary brn-lg float-right mt-3">Salvar</button>
+
+
+</form>

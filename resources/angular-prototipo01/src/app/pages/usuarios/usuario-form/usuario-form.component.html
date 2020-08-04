@@ -1,0 +1,74 @@
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <span>
+        Novo usuário
+      </span>
+    </li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+          Novo usuário
+      </h1>
+  </div>
+  <div>
+      <a [routerLink]="" class="btn btn-light">
+          << Voltar
+      </a>
+  </div>
+</div>
+
+<form [formGroup]="resourceForm" (submit)="submit()">
+  <div class="card mb-5">
+    <div class="card-header">
+      Infomações sobre o usuário
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome'>
+        <app-form-field-error [form-control]="resourceForm.get('nome')"></app-form-field-error>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName='email'>
+        <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName='password'>
+        <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
+      </div>
+      <div class="form-group">
+        <label for="foto">Foto</label>
+        <input type="file" formControlName="foto" class="form-control-file" id="foto">
+        <app-form-field-error [form-control]="resourceForm.get('foto')"></app-form-field-error>
+      </div>
+
+      <button [disabled]="submittingForm || resourceForm.invalid" [class.btn-pulse]="formStatus.submitted" type="submit"
+        class="btn btn-primary float-right mt-3">Salvar</button>
+
+        <ng-container *ngIf="formStatus">
+
+        <div *ngIf="formStatus.canShowErrors()" class="alert alert-danger" role="alert">
+          <div><strong>Erro no servidor:</strong></div>
+          <div *ngFor="let error of formStatus.errors">{{ error }}</div>
+        </div>
+
+        <div *ngIf="formStatus.canShowSuccess()" class="alert alert-success" role="alert">
+          <div><strong>Success!</strong></div>
+          <div *ngFor="let message of formStatus.messages">{{ message }}</div>
+        </div>
+
+      </ng-container>
+        <!--<app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>-->
+
+    </div>
+  </div>
+</form>
