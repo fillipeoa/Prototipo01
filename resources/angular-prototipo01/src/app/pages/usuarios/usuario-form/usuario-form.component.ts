@@ -61,10 +61,6 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
       );
   }
 
-  /*protected creationPageTitle(): string{
-    return "Novo Usuário"
-  }
-
 
   submit() {
     const resource: Usuario = this.jsonDataToResourceFn(this.resourceForm.value);
