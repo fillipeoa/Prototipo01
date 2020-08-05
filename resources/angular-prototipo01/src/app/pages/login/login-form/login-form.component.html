@@ -24,7 +24,11 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <form [formGroup]="loginForm" (submit)="loginAssync()" onsubmit="return false">
+=======
+<form ngNoForm (submit)="loginAssync()" onsubmit="return false">
+>>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
   <div class="card mb-5">
     <div class="card-header">
       Login
@@ -32,6 +36,7 @@
     <div class="card-body">
       <div class="form-group">
         <label for="email">Email</label>
+<<<<<<< HEAD
         <input type="email" formControlName="email" class="form-control" id="email" placeholder="Informe seu email"
           [value]='credentials.email' (input)='credentials.email=$event.target.value' required>
             <p *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
@@ -66,6 +71,17 @@
 
 
 
+=======
+        <input type="email" class="form-control" id="email" placeholder="Informe seu email" [value]='credentials.email' (input)='credentials.email=$event.target.value'>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" [value]='credentials.password' (input)='credentials.password=$event.target.value'>
+      </div>
+      <button onclick="SubmitForm(); return false;" type="submit" class="btn btn-primary float-right">
+        Entrar
+      </button>
+>>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
     </div>
   </div>
 </form>

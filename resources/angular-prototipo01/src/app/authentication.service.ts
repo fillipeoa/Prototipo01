@@ -46,7 +46,11 @@ export class AuthenticationService {
     return this.token;
   }
 
+<<<<<<< HEAD
   public getDetalhesUsuario(): DetalhesUsuario {
+=======
+    public getDetalhesUsuario(): DetalhesUsuario {
+>>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
       const token = this.getToken();
       let payload
       if(token) {
@@ -56,7 +60,11 @@ export class AuthenticationService {
       }else{
         return null
       }
+<<<<<<< HEAD
   }
+=======
+    }
+>>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
 
   public isLoggedIn(): boolean {
     const usuario = this.getDetalhesUsuario()

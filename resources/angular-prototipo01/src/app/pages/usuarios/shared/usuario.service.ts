@@ -6,7 +6,10 @@ import { BaseResourceService } from 'src/app/shared/services/base-resource.servi
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {AuthenticationService} from "../../../authentication.service";
+<<<<<<< HEAD
 import { HttpErrorResponse } from '@angular/common/http';
+=======
+>>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,7 @@ export class UsuarioService extends BaseResourceService<Usuario> {
 
   create(resource: Usuario): Observable<Usuario> {
     return this.http.post(this.apiPath, resource).pipe(
+<<<<<<< HEAD
         map(this.jsonDataToResource.bind(this))/*,
         catchError(this.handleError)*/
     )
@@ -28,6 +32,16 @@ export class UsuarioService extends BaseResourceService<Usuario> {
   console.log("SWEET NIGHT")
   let errorMessage = '';
   if (error.error instanceof HttpErrorResponse) {
+=======
+        map(this.jsonDataToResource.bind(this)),
+        catchError(this.handleError)
+    )
+}
+
+handleError(error) {
+  let errorMessage = '';
+  if (error.error instanceof ErrorEvent) {
+>>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
       // client-side error
       errorMessage = `Error: ${error.error.message}`;
   } else {
@@ -38,6 +52,9 @@ export class UsuarioService extends BaseResourceService<Usuario> {
   return throwError(errorMessage);
 }
 
+<<<<<<< HEAD
 
 */
+=======
+>>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
 }
