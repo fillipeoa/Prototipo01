@@ -2,7 +2,7 @@ import { BaseResourceModel } from '../models/base-resource.model';
 
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
-import { Observable, throwError } from "rxjs";
+import {config, Observable, throwError} from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Injector } from '@angular/core';
 import {AuthenticationService} from "../../authentication.service";
@@ -11,7 +11,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     protected http: HttpClient;
     protected token;
-    protected usuarioLogado;
+    public detalhesToken;
 
     constructor(
         protected apiPath: string,
@@ -21,7 +21,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     ){
         this.http = injector.get(HttpClient);
         this.token = "Bearer "+authenticationService.getToken();
-        this.usuarioLogado = authenticationService.getDetalhesUsuario();
+        this.detalhesToken = authenticationService.getDetalhesToken();
     }
 
     getAll(): Observable<T[]> {
@@ -31,7 +31,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
               'Authorization': this.token
           }
          }*/
-        console.log("call me maybe all");
         return this.http.get(this.apiPath/*, configHeader*/).pipe(
             map(this.jsonDataToResources.bind(this)),
           //  catchError(this.handleError)
@@ -39,11 +38,15 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     }
 
     getById(id: number): Observable<T> {
-      console.log("call me maybe id");
 
         const url = `${this.apiPath}/${id}`;
-
-        return this.http.get(url).pipe(
+        var configHeader =
+          {
+            headers: {
+              'Authorization': this.token
+            }
+          };
+        return this.http.get(url, configHeader).pipe(
             map(this.jsonDataToResource.bind(this)),
             //catchError(this.handleError)
         );

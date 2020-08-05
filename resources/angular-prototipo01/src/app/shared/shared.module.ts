@@ -8,6 +8,7 @@ import { FormFieldErrorComponent } from './components/form-field-error/form-fiel
 import { ServerErrorMessagesComponent } from './components/server-error-messages/server-error-messages.component';
 import {EnderecoService} from "./services/endereco.service";
 import { MapaComponent } from './components/mapa/mapa.component';
+import { ErrorMessagesComponent } from './components/error-messages/error-messages.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MapaComponent } from './components/mapa/mapa.component';
     PageHeaderComponent,
     FormFieldErrorComponent,
     ServerErrorMessagesComponent,
-    MapaComponent
+    MapaComponent,
+    ErrorMessagesComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { MapaComponent } from './components/mapa/mapa.component';
         PageHeaderComponent,
         FormFieldErrorComponent,
         ServerErrorMessagesComponent,
-        MapaComponent
+        MapaComponent,
+        ErrorMessagesComponent
     ]
 })
 export class SharedModule { }

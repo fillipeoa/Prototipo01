@@ -1,29 +1,13 @@
-import {Injectable} from '@angular/core'
+import {Injectable, Injector} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {Observable, of} from 'rxjs'
 import {map} from 'rxjs/operators'
 import {Router} from '@angular/router'
-
-export interface DetalhesUsuario {
-  id: number
-  nome: string
-  email: string
-  password: string
-  foto: string
-  exp: number
- // iat: number
-}
+import {UsuarioService} from "./pages/usuarios/shared/usuario.service";
+import {Usuario} from "./pages/usuarios/shared/usuario.model"
 
 export interface TokenResponse{
   token: string
-}
-
-export interface TokenPayload {
-  id?: number,
-  nome?: string,
-  email?: string,
-  password?: string,
-  foto?:string
 }
 
 @Injectable()
@@ -31,12 +15,12 @@ export interface TokenPayload {
 export class AuthenticationService {
   private token: string
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   private saveToken(token: string): void {
     localStorage.setItem('usuarioToken', token);
     this.token = token;
-    console.log(this.token)
   }
 
   public getToken(): string {
@@ -46,36 +30,28 @@ export class AuthenticationService {
     return this.token;
   }
 
-<<<<<<< HEAD
-  public getDetalhesUsuario(): DetalhesUsuario {
-=======
-    public getDetalhesUsuario(): DetalhesUsuario {
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
-      const token = this.getToken();
-      let payload
-      if(token) {
-        payload = token.split('.')[1]
-        payload = window.atob(payload)
-        return JSON.parse(payload)
-      }else{
-        return null
-      }
-<<<<<<< HEAD
-  }
-=======
+  public getDetalhesToken() {
+    const token = this.getToken();
+    let payload
+    if(token) {
+      payload = token.split('.')[1]
+      payload = window.atob(payload)
+      return JSON.parse(payload)
+    }else{
+      return null
     }
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
+  }
 
   public isLoggedIn(): boolean {
-    const usuario = this.getDetalhesUsuario()
-    if(usuario){
-      return usuario.exp > Date.now() / 1000
+    const token = this.getDetalhesToken()
+    if(token){
+      return token.exp > Date.now() / 1000
     }else{
       return false
     }
   }
 
-  public login(usuario: TokenPayload): Observable<any>{
+  public login(usuario): Observable<any>{
 
     const base = this.http.post(
       'http://localhost:8000/api/prototipo01/login',
@@ -113,6 +89,7 @@ export class AuthenticationService {
     this.token = '';
     window.localStorage.removeItem('usuarioToken');
     this.router.navigateByUrl('/');
+    window.location.reload();
   }
 
 

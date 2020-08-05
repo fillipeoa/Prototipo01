@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { AuthenticationService, TokenPayload } from 'src/app/authentication.service';
+import { AuthenticationService } from 'src/app/authentication.service';
 import { Component } from '@angular/core';
 import set = Reflect.set;
 <<<<<<< HEAD
@@ -16,12 +16,9 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 export class LoginFormComponent {
 
-  credentials: TokenPayload = {
-    id: 0,
-    nome: '',
+  credentials = {
     email: '',
-    password: '',
-    foto: ''
+    password: ''
   }
 
 <<<<<<< HEAD
@@ -72,10 +69,9 @@ export class LoginFormComponent {
   login() {
     this.auth.login(this.credentials).subscribe(
       () => {
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/');
       },
       err => {
-
         console.error(err)
       }
     )

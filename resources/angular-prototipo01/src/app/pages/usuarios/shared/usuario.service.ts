@@ -6,42 +6,30 @@ import { BaseResourceService } from 'src/app/shared/services/base-resource.servi
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {AuthenticationService} from "../../../authentication.service";
-<<<<<<< HEAD
 import { HttpErrorResponse } from '@angular/common/http';
-=======
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService extends BaseResourceService<Usuario> {
 
-  constructor(protected injector: Injector, authenticationService: AuthenticationService) {
+  public usuarioLogado: Usuario;
+
+  constructor(protected injector: Injector, private authenticationService: AuthenticationService) {
     super('http://localhost:8000/api/prototipo01/usuarios', injector, Usuario.fromJson, authenticationService);
   }
 
-  create(resource: Usuario): Observable<Usuario> {
-    return this.http.post(this.apiPath, resource).pipe(
-<<<<<<< HEAD
+
+  create(formData): Observable<Usuario> {
+    return this.http.post(this.apiPath, formData).pipe(
         map(this.jsonDataToResource.bind(this))/*,
         catchError(this.handleError)*/
-    )
-}
-
-/*handleError(error) {
-  console.log("SWEET NIGHT")
-  let errorMessage = '';
-  if (error.error instanceof HttpErrorResponse) {
-=======
-        map(this.jsonDataToResource.bind(this)),
-        catchError(this.handleError)
     )
 }
 
 handleError(error) {
   let errorMessage = '';
   if (error.error instanceof ErrorEvent) {
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
       // client-side error
       errorMessage = `Error: ${error.error.message}`;
   } else {
@@ -52,9 +40,29 @@ handleError(error) {
   return throwError(errorMessage);
 }
 
-<<<<<<< HEAD
+  public async getUsuarioLogado(): Promise<Usuario> {
+    const usuario = await this.buscarUsuarioLogado();
 
-*/
-=======
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
+    if(usuario){
+      usuario.subscribe(usuario=>{this.usuarioLogado = usuario});
+
+      return new Promise(resolve =>{
+        setTimeout(() => resolve(this.usuarioLogado) , 1500);
+      });
+    }
+    return null;
+  }
+
+  public buscarUsuarioLogado():Promise<Observable<Usuario>> {
+    const token = this.authenticationService.getDetalhesToken();
+
+    if(token){
+      const usuarioLogado = this.getById(token.sub);
+
+      return new Promise(resolve =>{
+        setTimeout(() => resolve(usuarioLogado) , 1500);
+      });
+    }
+    return null
+  }
 }

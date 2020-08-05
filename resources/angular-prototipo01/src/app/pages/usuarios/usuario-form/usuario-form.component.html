@@ -24,11 +24,7 @@
   </div>
 </div>
 
-<<<<<<< HEAD
 <form [formGroup]="resourceForm" (submit)="submit()">
-=======
-<form [formGroup]="resourceForm" (submit)="submitForm()">
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
   <div class="card mb-5">
     <div class="card-header">
       Infomações sobre o usuário
@@ -36,38 +32,24 @@
     <div class="card-body">
       <div class="form-group">
         <label for="nome">Nome</label>
-<<<<<<< HEAD
-        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" formControlName="nome">
-=======
         <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome'>
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
         <app-form-field-error [form-control]="resourceForm.get('nome')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-<<<<<<< HEAD
-        <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName="email">
-=======
         <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName='email'>
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
         <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
-<<<<<<< HEAD
         <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName="password">
-=======
-        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName='password'>
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
         <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="foto">Foto</label>
-        <input type="file" formControlName="foto" class="form-control-file" id="foto">
-        <app-form-field-error [form-control]="resourceForm.get('foto')"></app-form-field-error>
+        <input type="file" (change)="onFileChanged($event)" id="foto">
       </div>
 
-<<<<<<< HEAD
       <ng-container *ngIf="formStatus">
         <div *ngIf="formStatus.canShowErrors()" class="alert alert-danger" role="alert">
           <div><strong>Erro no servidor:</strong></div>
@@ -85,12 +67,6 @@
 
 
         <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
-=======
-      <button [disabled]="submittingForm || resourceForm.invalid" type="submit"
-        class="btn btn-primary float-right mt-3">Salvar</button>
-
-      <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>>
->>>>>>> 0554b3279e65ae1c366a8eaa24b050bc476bcb24
 
     </div>
   </div>

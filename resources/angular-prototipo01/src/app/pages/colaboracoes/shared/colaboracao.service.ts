@@ -14,7 +14,7 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
 
   enderecoService: EnderecoService;
 
-  constructor(protected injector: Injector, enderecoService: EnderecoService, authenticationService: AuthenticationService) {
+  constructor(protected injector: Injector, enderecoService: EnderecoService, private authenticationService: AuthenticationService) {
     super('http://localhost:8000/api/prototipo01/colaboracoes', injector, Colaboracao.fromJson, authenticationService);
     this.enderecoService = enderecoService;
   }
@@ -27,7 +27,7 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
         }
        }
 
-    const url = `http://localhost:8000/api/prototipo01/usuarios/${this.usuarioLogado.sub}/colaboracoes`;
+    const url = `http://localhost:8000/api/prototipo01/usuarios/${this.detalhesToken.sub}/colaboracoes`;
 
     return this.http.get(url, configHeader).pipe(
       map(this.jsonDataToResources.bind(this)),
@@ -62,17 +62,29 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
     });
   }
 
-  public async setCamposRestantes(colaboracao: Colaboracao): Promise<void> {
-    var endereco = await this.getEnderecoColaboracao(colaboracao);
-
-    setTimeout(() => {
-      if (endereco) {
-        colaboracao.latitude = endereco.latitude;
-        colaboracao.longitude = endereco.longitude;
-        colaboracao.idUsuario = 1;
-        colaboracao.dataRegistro = '2020-06-15';
-        console.log(colaboracao.dataRegistro);
+  public async setCamposRestantes(colaboracao: Colaboracao, mapa): Promise<void> {
+      if (mapa) {
+        colaboracao.latitude = mapa.map.getBounds().getCenter().lat;
+        colaboracao.longitude = mapa.map.getBounds().getCenter().lng;
+        colaboracao.idUsuario = this.authenticationService.getDetalhesToken().sub;
+        colaboracao.dataRegistro = this.dataFormatada();
       }
-    }, 1800);
+
+    return new Promise(resolve =>{
+      setTimeout(() => resolve() , 1800)
+    });
+  }
+
+  public dataFormatada(){
+    var data = new Date(),
+      dia  = data.getDate().toString().padStart(2, '0'),
+      mes  = (data.getMonth()+1).toString().padStart(2, '0'), //+1 pois no getMonth Janeiro começa com zero.
+      ano  = data.getFullYear(),
+      hora  = data.getHours().toString().padStart(2, '0'),
+      minuto  = data.getMinutes().toString().padStart(2, '0'),
+      segundo  = data.getSeconds().toString().padStart(2, '0')
+    ;
+
+    return ano+"/"+mes+"/"+dia+" "+hora+":"+minuto+":"+segundo;
   }
 }

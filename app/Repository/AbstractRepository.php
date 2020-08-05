@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
         }
 
 
-        public function selectConditions($conditions)
+        public function selectConditions($conditions, $id)
         {
             $expressions = explode(';', $conditions);
 

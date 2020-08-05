@@ -8,6 +8,7 @@ import { BaseResourceService } from '../../services/base-resource.service';
 import { switchMap } from "rxjs/operators";
 
 import toastr from "toastr";
+import {error} from "@angular/compiler/src/util";
 
 export abstract class BaseResourceFormComponent<T extends BaseResourceModel> implements OnInit, AfterContentChecked {
 
@@ -113,8 +114,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
     protected createResource() {
         const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
-        console.log(resource);
-        this.resourceService.create(resource)
+          this.resourceService.create(resource)
             .subscribe(
                 resource => this.actionsForSuccess(resource),
                 error => this.actionsForError(error)
@@ -137,9 +137,14 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
         const baseComponentPath: string = this.route.snapshot.parent.url[0].path;
 
         // redirect/reload component page
-        this.router.navigateByUrl(baseComponentPath, { skipLocationChange: true }).then(
-            () => this.router.navigate([baseComponentPath, resource.id, "edit"])
-        )
+        try {
+          this.router.navigateByUrl(baseComponentPath, { skipLocationChange: true }).then(
+            () => this.router.navigate([baseComponentPath]),
+          )
+        }catch (e) {
+          this.router.navigate(['']);
+        }
+
     }
 
     protected actionsForError(error) {
@@ -147,11 +152,11 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
         this.submittingForm = false;
 
-        /*if (error.status == 422) {
+        if (error.status == 422) {
             this.serverErrorMessages = JSON.parse(error._body).errors;
         } else {
             this.serverErrorMessages = ['Falha na comunicação com o servidor. Por favor tente mais tarde.'];
-        }*/
+        }
     }
 
     protected abstract buildResourceForm(): void;
