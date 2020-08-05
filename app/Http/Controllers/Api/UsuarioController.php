@@ -43,7 +43,6 @@ class UsuarioController extends Controller
         } catch (\Exception $e) {
             $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
-
         }
 
     }

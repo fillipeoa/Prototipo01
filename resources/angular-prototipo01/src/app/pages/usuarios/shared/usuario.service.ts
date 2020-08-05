@@ -1,10 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { Usuario } from "./usuario.model";
 
+
 import { BaseResourceService } from 'src/app/shared/services/base-resource.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {AuthenticationService} from "../../../authentication.service";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +19,25 @@ export class UsuarioService extends BaseResourceService<Usuario> {
     super('http://localhost:8000/api/prototipo01/usuarios', injector, Usuario.fromJson, authenticationService);
   }
 
+
   create(formData): Observable<Usuario> {
     return this.http.post(this.apiPath, formData).pipe(
-        map(this.jsonDataToResource.bind(this)),
-        catchError(this.handleError)
+        map(this.jsonDataToResource.bind(this))/*,
+        catchError(this.handleError)*/
     )
+}
+
+handleError(error) {
+  let errorMessage = '';
+  if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+  } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  }
+  console.log(errorMessage);
+  return throwError(errorMessage);
 }
 
   public async getUsuarioLogado(): Promise<Usuario> {

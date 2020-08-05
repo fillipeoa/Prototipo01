@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<form [formGroup]="resourceForm" (submit)="submitForm()">
+<form [formGroup]="resourceForm" (submit)="submit()">
   <div class="card mb-5">
     <div class="card-header">
       Infomações sobre o usuário
@@ -32,29 +32,42 @@
     <div class="card-body">
       <div class="form-group">
         <label for="nome">Nome</label>
-        <input type="nome" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome' >
+        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome'>
+        <app-form-field-error [form-control]="resourceForm.get('nome')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName='email'>
+        <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
-        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName='password'>
+        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName="password">
+        <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="foto">Foto</label>
         <input type="file" (change)="onFileChanged($event)" id="foto">
-
-        <!--<input type="file" formControlName="foto" class="form-control-file" id="foto">-->
       </div>
-      <!--<div class="form-group">
-        <label for="foto">Foto</label>
-        <input type="text" class="form-control" placeholder="Foto" id="foto"  formControlName='foto'>
-      </div>-->
-      <button type="submit" class="btn btn-primary float-right">
-        Salvar
-      </button>
+
+      <ng-container *ngIf="formStatus">
+        <div *ngIf="formStatus.canShowErrors()" class="alert alert-danger" role="alert">
+          <div><strong>Erro no servidor:</strong></div>
+          <div *ngFor="let error of formStatus.errors">{{ error }}</div>
+        </div>
+
+        <div *ngIf="formStatus.canShowSuccess()" class="alert alert-success" role="alert">
+          <div><strong>Success!</strong></div>
+          <div *ngFor="let message of formStatus.messages">{{ message }}</div>
+        </div>
+      </ng-container>
+
+      <button [disabled]=" resourceForm.invalid" [class.btn-pulse]="formStatus.submitted" type="submit"
+        class="btn btn-primary float-right mt-3">Salvar</button>
+
+
+        <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+
     </div>
   </div>
 </form>
