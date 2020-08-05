@@ -32,17 +32,17 @@
     <div class="card-body">
       <div class="form-group">
         <label for="nome">Nome</label>
-        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" formControlName='nome'>
+        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" formControlName="nome">
         <app-form-field-error [form-control]="resourceForm.get('nome')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName='email'>
+        <input type="email" class="form-control" id="email" placeholder="Informe seu email" formControlName="email">
         <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
-        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName='password'>
+        <input type="password" class="form-control" id="password" placeholder="Informe sua senha" formControlName="password">
         <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
       </div>
       <div class="form-group">
@@ -51,11 +51,7 @@
         <app-form-field-error [form-control]="resourceForm.get('foto')"></app-form-field-error>
       </div>
 
-      <button [disabled]="submittingForm || resourceForm.invalid" [class.btn-pulse]="formStatus.submitted" type="submit"
-        class="btn btn-primary float-right mt-3">Salvar</button>
-
-        <ng-container *ngIf="formStatus">
-
+      <ng-container *ngIf="formStatus">
         <div *ngIf="formStatus.canShowErrors()" class="alert alert-danger" role="alert">
           <div><strong>Erro no servidor:</strong></div>
           <div *ngFor="let error of formStatus.errors">{{ error }}</div>
@@ -65,9 +61,13 @@
           <div><strong>Success!</strong></div>
           <div *ngFor="let message of formStatus.messages">{{ message }}</div>
         </div>
-
       </ng-container>
-        <!--<app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>-->
+
+      <button [disabled]=" resourceForm.invalid" [class.btn-pulse]="formStatus.submitted" type="submit"
+        class="btn btn-primary float-right mt-3">Salvar</button>
+
+
+        <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
 
     </div>
   </div>

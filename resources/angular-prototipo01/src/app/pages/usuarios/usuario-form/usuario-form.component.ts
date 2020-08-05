@@ -43,15 +43,16 @@ export class UsuarioFormComponent extends BaseResourceFormComponent<Usuario> {
     return "Novo Usuário"
   }
 
+
   submit() {
+    const resource: Usuario = this.jsonDataToResourceFn(this.resourceForm.value);
     // 2 - Call onFormSubmitting to handle setting the form as submitted and
     //     clearing the error and success messages array
     this.formStatus.onFormSubmitting();
-
-    this.usuarioService.create(this.resource)
+    this.usuarioService.create(resource)
       .subscribe(
         (response) => {
-          // do something with success response
+          console.log(response)
         },
         (errorResponse: HttpErrorResponse) => {
           const messages = extractErrorMessagesFromErrorResponse(errorResponse);

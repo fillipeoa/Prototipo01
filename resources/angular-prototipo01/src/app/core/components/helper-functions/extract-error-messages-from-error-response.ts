@@ -8,7 +8,6 @@ export const extractErrorMessagesFromErrorResponse = (errorResponse: HttpErrorRe
 
     // 3 - Push the main error message to the array of errors
     errors.push(errorResponse.error.message);
-
     // 4 - Check for Laravel form validation error messages object
     if (errorResponse.error.errors) {
 
