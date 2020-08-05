@@ -8,6 +8,7 @@ import { BaseResourceService } from '../../services/base-resource.service';
 import { switchMap } from "rxjs/operators";
 
 import toastr from "toastr";
+import {error} from "@angular/compiler/src/util";
 
 export abstract class BaseResourceFormComponent<T extends BaseResourceModel> implements OnInit, AfterContentChecked {
 
@@ -135,9 +136,14 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
         const baseComponentPath: string = this.route.snapshot.parent.url[0].path;
 
         // redirect/reload component page
-        this.router.navigateByUrl(baseComponentPath, { skipLocationChange: true }).then(
-            () => this.router.navigate([baseComponentPath])
-        )
+        try {
+          this.router.navigateByUrl(baseComponentPath, { skipLocationChange: true }).then(
+            () => this.router.navigate([baseComponentPath]),
+          )
+        }catch (e) {
+          this.router.navigate(['']);
+        }
+
     }
 
     protected actionsForError(error) {

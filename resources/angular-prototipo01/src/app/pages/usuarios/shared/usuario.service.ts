@@ -17,8 +17,8 @@ export class UsuarioService extends BaseResourceService<Usuario> {
     super('http://localhost:8000/api/prototipo01/usuarios', injector, Usuario.fromJson, authenticationService);
   }
 
-  create(resource: Usuario): Observable<Usuario> {
-    return this.http.post(this.apiPath, resource).pipe(
+  create(formData): Observable<Usuario> {
+    return this.http.post(this.apiPath, formData).pipe(
         map(this.jsonDataToResource.bind(this)),
         catchError(this.handleError)
     )
