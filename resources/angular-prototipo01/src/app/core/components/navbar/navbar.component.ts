@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/authentication.service';
 import {UsuarioService} from "../../../pages/usuarios/shared/usuario.service";
+import {Usuario} from "../../../pages/usuarios/shared/usuario.model";
 
 @Component({
   selector: 'app-navbar',
@@ -8,8 +9,17 @@ import {UsuarioService} from "../../../pages/usuarios/shared/usuario.service";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(public auth: AuthenticationService) {
-    console.log(auth.getDetalhesUsuario());
+  public usuarioLogado: Usuario;
+
+  constructor(public auth: AuthenticationService, public usuarioService: UsuarioService) {
+    this.preencherNome();
+  }
+
+  async preencherNome(){
+    if(this.auth.isLoggedIn()){
+      this.usuarioLogado = await this.usuarioService.getUsuarioLogado();
+      console.log(this.usuarioLogado);
+    }
   }
 
   title = 'angular-prototipo01';

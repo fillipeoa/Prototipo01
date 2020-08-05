@@ -70,7 +70,7 @@
         </div>
         <div class="form group col-md-4">
           <label for="flagSituacao">Situação</label>
-          <select [ngClass]="{'selectReadOnly': isReadOnly()}" name="flagSituacao" id="flagSituacao" formControlName="flagSituacao" class="form-control">
+            <select [ngClass]="{'selectReadOnly': isReadOnly()}" name="flagSituacao" id="flagSituacao" formControlName="flagSituacao" class="form-control">
             <option value="0">Pendente</option>
             <option value="1">Confirmada</option>
           </select>
@@ -78,20 +78,24 @@
 
           <app-form-field-error [form-control]="resourceForm.get('flagSituacao')"></app-form-field-error>
         </div>
+        <app-server-error-messages *ngIf="enderecoNaoEncontrado" [server-error-messages]="['Endereco nao encontrado']"></app-server-error-messages>
+
       </div>
     </div>
+      <button (click)="this.setEndereco()" *ngIf="currentAction=='edit' || currentAction=='new'" type="button" class="btn btn-dark brn-lg float-right mt-3">Buscar endereço</button>
 
       <div style="width: 48%; height: 300px; float: right">
-        <button (click)="this.setEndereco()" *ngIf="currentAction=='edit' || currentAction=='new'" type="button" class="btn btn-dark brn-lg float-right mt-3">Buscar endereço</button>
-        <app-mapa [podeRecarregar]="this.podeRecarregar" [endereco]="this.endereco"></app-mapa>
-        <app-server-error-messages *ngIf="enderecoNaoEncontrado" [server-error-messages]="['Endereco nao encontrado']"></app-server-error-messages>
+        <app-mapa [formColaboracao]="true" [podeRecarregar]="this.podeRecarregar" [endereco]="this.endereco">
+        </app-mapa>
       </div>
     </div>
   </div>
 
   <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
 
+  <button *ngIf="currentAction=='view' && this.eDono" [routerLink]="['edit']" class="btn btn-warning brn-lg float-right mt-3">Editar</button>
   <button *ngIf="currentAction!='view'" [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary brn-lg float-right mt-3">Salvar</button>
+
 
 
 </form>

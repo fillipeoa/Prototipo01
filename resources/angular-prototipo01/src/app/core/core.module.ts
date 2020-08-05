@@ -6,6 +6,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from '@angular/router';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
+import {UsuarioService} from "../pages/usuarios/shared/usuario.service";
+import {UsuariosModule} from "../pages/usuarios/usuarios.module";
 
 @NgModule({
   declarations: [NavbarComponent],

@@ -6,22 +6,25 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item " routerLinkActive="active">
+        <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/">Início</a>
         </li>
-        <li *ngIf="!auth.isLoggedIn()" class="nav-item" routerLinkActive="active">
+        <li *ngIf="!this.auth.isLoggedIn()" class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/usuarios/new">Registre-se</a>
         </li>
-        <li *ngIf="!auth.isLoggedIn()" class="nav-item" routerLinkActive="active">
+        <li *ngIf="!this.auth.isLoggedIn()" class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li *ngIf="this.auth.isLoggedIn()" class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/colaboracoes">Minhas colaborações</a>
         </li>
       </ul>
         <div class="float-right">
           <ul class="navbar-nav mr-auto">
-            <li *ngIf="auth.isLoggedIn()" class="nav-item float-right" routerLinkActive="active" >
-              <a class="nav-link" routerLink="/">{{auth.getDetalhesUsuario().nome || "Usuá"}}</a>
+            <li *ngIf="this.usuarioLogado" class="nav-item float-right" routerLinkActive="active" >
+              <a class="nav-link" routerLink="/">{{usuarioLogado.nome}}</a>
             </li>
-            <li *ngIf="auth.isLoggedIn()" class="nav-item float-right" routerLinkActive="active" >
+            <li *ngIf="this.auth.isLoggedIn()" class="nav-item float-right" routerLinkActive="active" >
               <a class="nav-link" routerLink="" (click)="auth.logout()">Sair</a>
             </li>
           </ul>

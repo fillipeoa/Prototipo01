@@ -11,6 +11,7 @@
 
 </div>
 
+<app-error-messages *ngIf="enderecoNaoEncontrado" [error-message]="'Local não encontrado'"></app-error-messages>
 <div style="width: 100%; height: 500px;">
 <app-mapa *ngIf="carregou" [coords]="this.coords" [podeRecarregar]="true" [endereco]="this.endereco"></app-mapa>
 </div>
