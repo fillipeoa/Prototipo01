@@ -28,7 +28,6 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
   constructor(protected colaboracaoService: ColaboracaoService, protected usuarioService:UsuarioService, protected injector: Injector) {
     super(injector, new Colaboracao(), colaboracaoService, Colaboracao.fromJson);
     this.verificarDono().then(value => this.eDono = value);
-    console.log(this.eDono);
   }
 
   async verificarDono(): Promise<boolean>{
@@ -74,9 +73,7 @@ export class ColaboracaoFormComponent extends BaseResourceFormComponent<Colabora
 
   protected async createResource() {
     const resource: Colaboracao = this.jsonDataToResourceFn(this.resourceForm.value);
-    console.log(resource);
     await this.colaboracaoService.setCamposRestantes(resource, this.mapa);
-    console.log(resource);
     setTimeout(() => {
         this.resourceService.create(resource)
           .subscribe(

@@ -32,7 +32,6 @@ class ColaboracaoRequest extends FormRequest
         'rua' => 'required',
         'numero' => 'required',
         'bairro' => 'required',
-        'complemento' => 'required',
         'cidade' => 'required',
         'flagSituacao' => 'required'
         ];

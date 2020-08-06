@@ -6,6 +6,7 @@ import { BaseResourceService } from 'src/app/shared/services/base-resource.servi
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {AuthenticationService} from "../../../authentication.service";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,12 @@ export class UsuarioService extends BaseResourceService<Usuario> {
 
   create(formData): Observable<Usuario> {
     return this.http.post(this.apiPath, formData).pipe(
-        map(this.jsonDataToResource.bind(this)),
-        catchError(this.handleError)
+        map(this.jsonDataToResource.bind(this))/*,
+        catchError(this.handleError)*/
     )
 }
 
-handleError(error) {
+/*handleError(error) {
   let errorMessage = '';
   if (error.error instanceof ErrorEvent) {
       // client-side error
@@ -36,7 +37,8 @@ handleError(error) {
   }
   console.log(errorMessage);
   return throwError(errorMessage);
-}
+}*/
+
   public async getUsuarioLogado(): Promise<Usuario> {
     const usuario = await this.buscarUsuarioLogado();
 

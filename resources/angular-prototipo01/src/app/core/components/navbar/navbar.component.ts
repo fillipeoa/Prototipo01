@@ -18,7 +18,6 @@ export class NavbarComponent {
   async preencherNome(){
     if(this.auth.isLoggedIn()){
       this.usuarioLogado = await this.usuarioService.getUsuarioLogado();
-      console.log(this.usuarioLogado);
     }
   }
 

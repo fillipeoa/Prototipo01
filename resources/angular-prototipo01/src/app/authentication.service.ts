@@ -13,7 +13,8 @@ export interface TokenResponse{
 @Injectable()
 
 export class AuthenticationService {
-  private token: string
+  private token: string;
+  public nomeUsuarioLogado;
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -75,6 +76,7 @@ export class AuthenticationService {
           this.saveToken(data[0].token);
         }
     });
+
 
     return request;
   }

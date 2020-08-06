@@ -27,7 +27,8 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
         }
        }
 
-    const url = `http://localhost:8000/api/prototipo01/usuarios/${this.detalhesToken.sub}/colaboracoes`;
+       const idUsuarioLogado = this.detalhesToken.sub;
+       const url = `http://localhost:8000/api/prototipo01/usuarios/${idUsuarioLogado}/colaboracoes`;
 
     return this.http.get(url, configHeader).pipe(
       map(this.jsonDataToResources.bind(this)),

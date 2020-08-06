@@ -20,8 +20,8 @@ class CreateColaboracaoTable extends Migration
             $table->string('titulo');
             $table->string('descricao');
             $table->dateTime('dataRegistro');
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->float('latitude', 10, 7);
+            $table->float('longitude', 10, 7);
             $table->string('rua');
             $table->string('numero');
             $table->string('bairro');
