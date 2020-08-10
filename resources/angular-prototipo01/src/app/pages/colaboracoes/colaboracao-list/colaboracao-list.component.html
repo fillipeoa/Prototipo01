@@ -11,10 +11,10 @@
 
 <button (click)="filtroData(dataInicial.value, dataFinal.value)" class="btn btn-primary float-right">Filtrar</button>
 <div class="form-group float-right mr-2">
-  <input type="date" #dataInicial class="form-control" [value]='dataInicial' id="dataInicial" placeholder="Data inicial">
+  <input type="date" #dataFinal class="form-control" [value]='dataFinal' id="dataFinal" placeholder="Data final">
 </div>
 <div class="form-group float-right mr-2">
-  <input type="date" #dataFinal class="form-control" [value]='dataFinal' id="dataFinal" placeholder="Data final">
+  <input type="date" #dataInicial class="form-control" [value]='dataInicial' id="dataInicial" placeholder="Data inicial">
 </div>
 
 <table class="table table-hover">

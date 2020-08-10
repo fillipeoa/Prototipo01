@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from "@angular/common/http";
@@ -23,8 +22,7 @@ import { ColaboracaoFilterPipe } from './pages/colaboracoes/colaboracao-list/col
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    FormsModule,
-    Ng2SearchPipeModule
+    FormsModule
   ],
   providers: [ AuthenticationService, AuthGuardService ],
   bootstrap: [ AppComponent ]

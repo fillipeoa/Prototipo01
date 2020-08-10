@@ -37,8 +37,6 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
   }
 
   public filtroData(dataInicial, dataFinal){
-    console.log(dataInicial)
-    console.log("filtro data")
     var configHeader =
       {
         headers: {

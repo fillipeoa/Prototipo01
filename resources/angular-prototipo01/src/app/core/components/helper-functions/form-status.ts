@@ -20,6 +20,15 @@ export class FormStatus {
    * Determines if error messages can be shown
    */
   canShowErrors() {
+    if(this.errors && this.errors.length>0){
+      for(let i=0;i<this.errors.length;i++){
+        if(this.errors[i]=='The given data was invalid.'){
+            this.errors[i] = null;
+        } else if(this.errors[i]=='The email has already been taken.'){
+          this.errors[i] = 'Este email já está em uso.'
+        }
+      }
+    }
     return this.showMessages.error && this.errors && this.errors.length > 0 && !this.submitted;
   }
 

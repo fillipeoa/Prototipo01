@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { BaseResourceListComponent } from 'src/app/shared/components/base-resource-list/base-resource-list.component';
+import {BaseResourceListComponent} from 'src/app/shared/components/base-resource-list/base-resource-list.component';
 
-import { Colaboracao } from "../shared/colaboracao.model";
-import { ColaboracaoService } from "../shared/colaboracao.service";
+import {Colaboracao} from "../shared/colaboracao.model";
+import {ColaboracaoService} from "../shared/colaboracao.service";
 
 
 @Component({
@@ -18,9 +18,9 @@ export class ColaboracaoListComponent extends BaseResourceListComponent<Colabora
     super(colaboracaoService);
   }
 
-  filtroData(dataInicial, dataFinal){
+  filtroData(dataInicial, dataFinal) {
     this.colaboracaoService.filtroData(dataInicial, dataFinal).subscribe(
-        resources => console.log("a"),
+        resources => this.resources = resources,
         error => alert('Erro ao carregar a lista')
       );
   }
