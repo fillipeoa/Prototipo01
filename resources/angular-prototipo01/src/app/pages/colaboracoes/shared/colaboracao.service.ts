@@ -34,7 +34,25 @@ export class ColaboracaoService extends BaseResourceService<Colaboracao> {
       map(this.jsonDataToResources.bind(this)),
       catchError(this.handleError)
     );
+  }
 
+  public filtroData(dataInicial, dataFinal){
+    console.log(dataInicial)
+    console.log("filtro data")
+    var configHeader =
+      {
+        headers: {
+            'Authorization': this.token
+        }
+       }
+       const idUsuarioLogado = this.detalhesToken.sub;
+       let url = `http://localhost:8000/api/prototipo01/usuarios/${idUsuarioLogado}/colaboracoes/`;
+       url = url + `?conditions=dataRegistro:>:${dataInicial};dataRegistro:<:${dataFinal}`
+
+    return this.http.get(url, configHeader).pipe(
+      map(this.jsonDataToResources.bind(this)),
+      catchError(this.handleError)
+    );
   }
 
   public getEnderecoColaboracao(colaboracao: Colaboracao): Promise<Endereco>{

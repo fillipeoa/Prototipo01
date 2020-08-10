@@ -18,10 +18,17 @@ export class ColaboracaoListComponent extends BaseResourceListComponent<Colabora
     super(colaboracaoService);
   }
 
+  filtroData(dataInicial, dataFinal){
+    this.colaboracaoService.filtroData(dataInicial, dataFinal).subscribe(
+        resources => console.log("a"),
+        error => alert('Erro ao carregar a lista')
+      );
+  }
+
   ngOnInit(): void {
     this.colaboracaoService.getByUsuario().subscribe(
       resources => this.resources = resources.sort((a, b) => b.id - a.id),
-      error => alert('Error ao carregar a lista')
+      error => alert('Erro ao carregar a lista')
     );
 
   }
