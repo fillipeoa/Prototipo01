@@ -9,6 +9,14 @@
   button-class="btn-success"
 ></app-page-header>
 
+<button (click)="filtroData(dataInicial.value, dataFinal.value)" class="btn btn-primary float-right">Filtrar</button>
+<div class="form-group float-right mr-2">
+  <input type="date" #dataInicial class="form-control" [value]='dataInicial' id="dataInicial" placeholder="Data inicial">
+</div>
+<div class="form-group float-right mr-2">
+  <input type="date" #dataFinal class="form-control" [value]='dataFinal' id="dataFinal" placeholder="Data final">
+</div>
+
 <table class="table table-hover">
   <thead>
   <tr class="bg-primary text-light">
@@ -23,9 +31,9 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let colaboracao of resources ">
+  <tr *ngFor="let colaboracao of resources">
     <td>{{colaboracao.titulo}}</td>
-    <td>{{colaboracao.dataRegistro | date:"MM/dd/yy 'às' HH:mm"}}</td>
+    <td>{{colaboracao.dataRegistro | date:"dd/MM/yy 'às' HH:mm"}}</td>
     <td>{{colaboracao.rua}}</td>
     <td>{{colaboracao.numero}}</td>
     <td>{{colaboracao.bairro}}</td>

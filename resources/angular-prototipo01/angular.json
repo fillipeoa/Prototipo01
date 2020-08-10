@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-prototipo01"
+    }
+  },
+  "defaultProject": "angular-prototipo01",
+  "cli": {
+    "analytics": false
+  }
 }

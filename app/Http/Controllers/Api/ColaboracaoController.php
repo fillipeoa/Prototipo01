@@ -69,7 +69,6 @@ class ColaboracaoController extends Controller
 
         try {
 
-
             $colaboracao = $this->colaboracao->create($data);
 
             return response()->json([
